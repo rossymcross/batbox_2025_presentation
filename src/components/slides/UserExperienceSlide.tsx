@@ -72,14 +72,14 @@ export const UserExperienceSlide: React.FC<UserExperienceSlideProps> = ({ onNext
               <Monitor className="w-24 h-24 text-emerald-400" />
             </div>
 
-            <div className="flex items-center gap-4 mb-6 relative z-10">
+            <div className="flex items-center gap-4 mb-4 relative z-10">
                 <div className="bg-white px-3 py-1.5 rounded-lg h-10 flex items-center shadow-lg shadow-black/20">
                     <img src={iaapaLogo} alt="IAAPA" className="h-full w-auto object-contain" />
                 </div>
-                <span className="text-emerald-400 font-semibold uppercase tracking-wider text-xs">Innovation Debut</span>
             </div>
             
-            <h3 className="text-4xl font-extrabold text-white mb-6 relative z-10 leading-tight">Self-Service Booking Kiosk</h3>
+            <h3 className="text-3xl font-extrabold text-emerald-400 mb-2 relative z-10 uppercase tracking-wide">Innovation Debut</h3>
+            <p className="text-lg text-gray-400 mb-6 relative z-10">Self-Service Booking Kiosk</p>
 
             <div className="space-y-4 relative z-10 flex-1">
                 <div className="bg-black/20 p-5 rounded-xl border border-white/5 backdrop-blur-sm">
@@ -115,13 +115,13 @@ export const UserExperienceSlide: React.FC<UserExperienceSlideProps> = ({ onNext
               <Zap className="w-24 h-24 text-blue-400" />
             </div>
 
-            <div className="flex items-center gap-3 text-blue-400 mb-6 relative z-10">
+            <div className="flex items-center gap-3 text-blue-400 mb-4 relative z-10">
                 <Clock className="w-6 h-6" />
-                <span className="font-semibold uppercase tracking-wider text-sm">Onboarding Efficiency</span>
             </div>
             
+            <h3 className="text-3xl font-extrabold text-blue-400 mb-2 relative z-10 uppercase tracking-wide">Onboarding Efficiency</h3>
+            
             <div className="relative z-10 mb-8">
-                <h3 className="text-4xl font-extrabold text-white mb-4 leading-tight">Onboarding Efficiency</h3>
                 <div className="text-sm text-gray-400 mb-2">Time to First Pitch</div>
                 <div className="flex items-baseline gap-4">
                     <span className="text-4xl font-bold text-gray-600 line-through decoration-red-500/50">~6m</span>
@@ -161,12 +161,12 @@ export const UserExperienceSlide: React.FC<UserExperienceSlideProps> = ({ onNext
             </div>
             
             <div className="relative z-10">
-                <div className="flex items-center gap-3 text-purple-400 mb-6">
+                <div className="flex items-center gap-3 text-purple-400 mb-4">
                     <Layout className="w-6 h-6" />
-                    <span className="font-semibold uppercase tracking-wider text-sm">Interface Design</span>
                 </div>
                 
-                <h3 className="text-4xl font-extrabold text-white mb-6 leading-tight">Re-imagined Game Selection</h3>
+                <h3 className="text-3xl font-extrabold text-purple-400 mb-2 uppercase tracking-wide">Interface Design</h3>
+                <p className="text-lg text-gray-400 mb-6">Re-imagined Game Selection</p>
                 
                 <p className="text-lg text-gray-300 leading-relaxed mb-8">
                     UI for game selection modes has been redesigned to <span className="text-white font-semibold">massively simplify</span> and streamline the registration process.
