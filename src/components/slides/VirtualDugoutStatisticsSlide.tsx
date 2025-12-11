@@ -112,53 +112,51 @@ export const VirtualDugoutStatisticsSlide: React.FC<VirtualDugoutStatisticsSlide
         </div>
 
         {/* Middle Row: Chart */}
-        <div className="flex-1 min-h-0 grid grid-cols-1">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="bg-[#1E1F23] border border-white/5 rounded-2xl p-6 relative"
-          >
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-bold text-white font-raleway">Group Size Distribution <span className="text-gray-500 text-sm font-normal ml-2">Weekday vs Weekend</span></h3>
-              <div className="flex gap-4 text-sm font-medium">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-cyan-400"></span> Weekday
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-orange-400"></span> Weekend
-                </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="flex-1 min-h-0 bg-[#1E1F23] border border-white/5 rounded-2xl p-6 relative flex flex-col"
+        >
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-bold text-white font-raleway">Group Size Distribution <span className="text-gray-500 text-sm font-normal ml-2">Weekday vs Weekend</span></h3>
+            <div className="flex gap-4 text-sm font-medium">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-cyan-400"></span> Weekday
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-orange-400"></span> Weekend
               </div>
             </div>
-            
-            <div className="h-[calc(100%-3rem)] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
-                  <XAxis 
-                    dataKey="name" 
-                    axisLine={false} 
-                    tickLine={false} 
-                    tick={{ fill: '#9ca3af', fontSize: 12 }} 
-                    dy={10}
-                  />
-                  <YAxis 
-                    axisLine={false} 
-                    tickLine={false} 
-                    tick={{ fill: '#9ca3af', fontSize: 12 }} 
-                  />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#1E1F23', borderColor: '#333', borderRadius: '8px', color: '#fff' }}
-                    itemStyle={{ color: '#fff' }}
-                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-                  />
-                  <Bar dataKey="weekday" fill="#22d3ee" radius={[4, 4, 0, 0]} barSize={40} />
-                  <Bar dataKey="weekend" fill="#fb923c" radius={[4, 4, 0, 0]} barSize={40} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </motion.div>
-        </div>
+          </div>
+          
+          <div className="flex-1 min-h-0 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
+                <XAxis 
+                  dataKey="name" 
+                  axisLine={false} 
+                  tickLine={false} 
+                  tick={{ fill: '#9ca3af', fontSize: 12 }} 
+                  dy={10}
+                />
+                <YAxis 
+                  axisLine={false} 
+                  tickLine={false} 
+                  tick={{ fill: '#9ca3af', fontSize: 12 }} 
+                />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#1E1F23', borderColor: '#333', borderRadius: '8px', color: '#fff' }}
+                  itemStyle={{ color: '#fff' }}
+                  cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                />
+                <Bar dataKey="weekday" fill="#22d3ee" radius={[4, 4, 0, 0]} barSize={40} />
+                <Bar dataKey="weekend" fill="#fb923c" radius={[4, 4, 0, 0]} barSize={40} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </motion.div>
 
         {/* Bottom Row: Revenue */}
         <div className="grid grid-cols-5 gap-4">
