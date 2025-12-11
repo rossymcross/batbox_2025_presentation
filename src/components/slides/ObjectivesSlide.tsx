@@ -91,21 +91,6 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
         }
       `}</style>
 
-      {/* Navigation Controls */}
-      <button 
-        onClick={onPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/30 text-white/50 hover:text-cyan-400 transition-all duration-300 group"
-      >
-        <ChevronLeft size={32} className="group-hover:-translate-x-1 transition-transform" />
-      </button>
-
-      <button 
-        onClick={onNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/30 text-white/50 hover:text-cyan-400 transition-all duration-300 group"
-      >
-        <ChevronRight size={32} className="group-hover:translate-x-1 transition-transform" />
-      </button>
-
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[120px]" />
