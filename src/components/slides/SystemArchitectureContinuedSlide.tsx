@@ -197,27 +197,16 @@ export const SystemArchitectureContinuedSlide: React.FC<SystemArchitectureContin
 
                {/* Brick and Mortar AI */}
                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 shrink-0" />
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
                   <span className="text-gray-300">Brick and Mortar AI</span>
-                  <span className="ml-auto text-xs px-2 py-1 rounded bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">Status Needed</span>
+                  <span className="ml-auto text-xs px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">In Progress</span>
                </div>
 
                {/* Mexico Batbox */}
                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-blue-400 shrink-0" />
+                  <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
                   <span className="text-gray-300">Mexico Batbox</span>
-                  <span className="ml-auto text-xs text-gray-500">Venue Testing</span>
-               </div>
-
-               <div className="h-px bg-white/5 my-2" />
-
-               {/* Custom Builds */}
-               <div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wider mb-2">Custom Projects Signed</div>
-                  <div className="flex gap-2">
-                     <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white">Nerf</span>
-                     <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white">Daikin</span>
-                  </div>
+                  <span className="ml-auto text-xs px-2 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Ready for Next Steps</span>
                </div>
             </div>
           </motion.div>
