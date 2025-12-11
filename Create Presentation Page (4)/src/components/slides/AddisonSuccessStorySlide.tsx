@@ -171,7 +171,7 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
             className="group relative px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full text-white font-bold text-lg shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_50px_rgba(16,185,129,0.5)] transition-all duration-300 flex items-center gap-3 z-50 cursor-pointer pointer-events-auto"
             onClick={(e) => {
               e.stopPropagation(); // Prevent navigation when clicking button
-              window.open('https://takoha-test.com/batbox-analytics/', '_blank');
+              // Action to be added later
             }}
           >
             <span>View All Batbox Addison Data</span>
