@@ -93,11 +93,7 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
         }
       `}</style>
 
-      {/* Navigation Controls */}
-      <div className="absolute inset-0 z-20 flex pointer-events-none">
-        <div className="w-1/4 h-full cursor-default pointer-events-auto" onClick={onPrev} />
-        <div className="w-3/4 h-full cursor-default pointer-events-auto" onClick={onNext} />
-      </div>
+      {/* Navigation Controls removed - use arrow buttons only */}
 
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none z-0">
