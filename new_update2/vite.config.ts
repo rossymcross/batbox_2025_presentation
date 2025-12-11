@@ -5,7 +5,6 @@
 
   export default defineConfig({
     plugins: [react()],
-    base: '/batbox-presentation/',
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
@@ -18,12 +17,11 @@
         'next-themes@0.4.6': 'next-themes',
         'lucide-react@0.487.0': 'lucide-react',
         'input-otp@1.4.2': 'input-otp',
-        'figma:asset/b48a003eb09a9aa603c90fc81f3e8997a64d6e61.png': path.resolve(__dirname, './src/assets/b48a003eb09a9aa603c90fc81f3e8997a64d6e61.png'),
+        'figma:asset/f2a14099d7c2e80ca328dba12facf4ab39d5613e.png': path.resolve(__dirname, './src/assets/f2a14099d7c2e80ca328dba12facf4ab39d5613e.png'),
         'figma:asset/ccbf243e976ecc624a525a48a748fabfe54f2b15.png': path.resolve(__dirname, './src/assets/ccbf243e976ecc624a525a48a748fabfe54f2b15.png'),
         'figma:asset/8c5d9f29f6913d56bd0414f64e268b3dea6fe357.png': path.resolve(__dirname, './src/assets/8c5d9f29f6913d56bd0414f64e268b3dea6fe357.png'),
         'figma:asset/8c4d5a2b0d4df726c5ab0a52d19bed64e1998377.png': path.resolve(__dirname, './src/assets/8c4d5a2b0d4df726c5ab0a52d19bed64e1998377.png'),
         'figma:asset/7cf67c667b6b1f5fa4bcdbbe04cce4152b351207.png': path.resolve(__dirname, './src/assets/7cf67c667b6b1f5fa4bcdbbe04cce4152b351207.png'),
-        'figma:asset/f2a14099d7c2e80ca328dba12facf4ab39d5613e.png': path.resolve(__dirname, './src/assets/f2a14099d7c2e80ca328dba12facf4ab39d5613e.png'),
         'embla-carousel-react@8.6.0': 'embla-carousel-react',
         'cmdk@1.1.1': 'cmdk',
         'class-variance-authority@0.7.1': 'class-variance-authority',
