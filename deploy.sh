@@ -69,5 +69,3 @@ echo -e "${GREEN}========================================${NC}"
 if [ -n "$PRODUCTION_URL" ]; then
     echo -e "${YELLOW}URL:${NC} $PRODUCTION_URL"
 fi
-
-
