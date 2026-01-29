@@ -13,7 +13,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: '/batbox-presentation/',
+  base: '/batbox-boardmeeting/',
   build: {
     outDir: 'build',
     // Optimize chunk splitting

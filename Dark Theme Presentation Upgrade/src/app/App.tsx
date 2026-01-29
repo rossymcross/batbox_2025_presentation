@@ -23,7 +23,6 @@ const BatboxSuiteSlide = lazy(() => import("@/app/components/BatboxSuiteSlide").
 const DaikinExperienceSlide = lazy(() => import("@/app/components/DaikinExperienceSlide").then(m => ({ default: m.DaikinExperienceSlide })));
 const Q1DeliverablesSlide = lazy(() => import("@/app/components/Q1DeliverablesSlide").then(m => ({ default: m.Q1DeliverablesSlide })));
 const Q2DeliverablesSlide = lazy(() => import("@/app/components/Q2DeliverablesSlide").then(m => ({ default: m.Q2DeliverablesSlide })));
-const Q3DeliverablesSlide = lazy(() => import("@/app/components/Q3DeliverablesSlide").then(m => ({ default: m.Q3DeliverablesSlide })));
 const Q4DeliverablesSlide = lazy(() => import("@/app/components/Q4DeliverablesSlide").then(m => ({ default: m.Q4DeliverablesSlide })));
 const SuperadminPortalSlide = lazy(() => import("@/app/components/SuperadminPortalSlide").then(m => ({ default: m.SuperadminPortalSlide })));
 const BatboxSuiteIntroSlide = lazy(() => import("@/app/components/BatboxSuiteIntroSlide").then(m => ({ default: m.BatboxSuiteIntroSlide })));
@@ -37,7 +36,7 @@ const CustomerSupportSlide = lazy(() => import("@/app/components/CustomerSupport
 const SuccessDefinitionSlide = lazy(() => import("@/app/components/SuccessDefinitionSlide").then(m => ({ default: m.SuccessDefinitionSlide })));
 const ThankYouSlide = lazy(() => import("@/app/components/ThankYouSlide").then(m => ({ default: m.ThankYouSlide })));
 
-const TOTAL_SLIDES = 34;
+const TOTAL_SLIDES = 33;
 
 // Minimal loading fallback that doesn't affect layout
 const SlideFallback = memo(() => (
@@ -99,26 +98,25 @@ export default function App() {
           11: () => import("@/app/components/SectionTitleSlide"),
           12: () => import("@/app/components/AIFirstDevelopmentSlide"),
           13: () => import("@/app/components/Q1DeliverablesSlide"),
-          14: () => import("@/app/components/BatboxSuiteSlide"),
-          15: () => import("@/app/components/DaikinExperienceSlide"),
-          16: () => import("@/app/components/SuperadminPortalSlide"),
-          17: () => import("@/app/components/Q2DeliverablesSlide"),
-          18: () => import("@/app/components/Q3DeliverablesSlide"),
-          19: () => import("@/app/components/Q4DeliverablesSlide"),
-          20: () => import("@/app/components/SectionTitleSlide"),
-          21: () => import("@/app/components/BatboxSuiteIntroSlide"),
-          22: () => import("@/app/components/StrategicPivotSlide"),
-          23: () => import("@/app/components/BatboxEcosystemSlide"),
-          24: () => import("@/app/components/SectionTitleSlide"),
-          25: () => import("@/app/components/BatboxSuiteDemoSlide"),
-          26: () => import("@/app/components/ShiftingDNASlide"),
-          27: () => import("@/app/components/CDPFoundationSlide"),
-          28: () => import("@/app/components/AIOperationsSlide"),
-          29: () => import("@/app/components/GamificationSlide"),
-          30: () => import("@/app/components/ExecutionPlanSlide"),
-          31: () => import("@/app/components/CustomerSupportSlide"),
-          32: () => import("@/app/components/SuccessDefinitionSlide"),
-          33: () => import("@/app/components/ThankYouSlide"),
+          14: () => import("@/app/components/Q2DeliverablesSlide"),
+          15: () => import("@/app/components/SuperadminPortalSlide"),
+          16: () => import("@/app/components/Q4DeliverablesSlide"),
+          17: () => import("@/app/components/BatboxSuiteSlide"),
+          18: () => import("@/app/components/DaikinExperienceSlide"),
+          19: () => import("@/app/components/SectionTitleSlide"),
+          20: () => import("@/app/components/BatboxSuiteIntroSlide"),
+          21: () => import("@/app/components/StrategicPivotSlide"),
+          22: () => import("@/app/components/BatboxEcosystemSlide"),
+          23: () => import("@/app/components/SectionTitleSlide"),
+          24: () => import("@/app/components/BatboxSuiteDemoSlide"),
+          25: () => import("@/app/components/ShiftingDNASlide"),
+          26: () => import("@/app/components/CDPFoundationSlide"),
+          27: () => import("@/app/components/AIOperationsSlide"),
+          28: () => import("@/app/components/GamificationSlide"),
+          29: () => import("@/app/components/ExecutionPlanSlide"),
+          30: () => import("@/app/components/CustomerSupportSlide"),
+          31: () => import("@/app/components/SuccessDefinitionSlide"),
+          32: () => import("@/app/components/ThankYouSlide"),
         };
         slideMap[index]?.();
       }
@@ -238,42 +236,36 @@ export default function App() {
               />
             )}
             {currentSlide === 14 && (
-              <BatboxSuiteSlide
-                onNext={handleNext}
-                onPrev={handlePrev}
-              />
-            )}
-            {currentSlide === 15 && (
-              <DaikinExperienceSlide
-                onNext={handleNext}
-                onPrev={handlePrev}
-              />
-            )}
-            {currentSlide === 16 && (
-              <SuperadminPortalSlide
-                onNext={handleNext}
-                onPrev={handlePrev}
-              />
-            )}
-            {currentSlide === 17 && (
               <Q2DeliverablesSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 18 && (
-              <Q3DeliverablesSlide
+            {currentSlide === 15 && (
+              <SuperadminPortalSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 19 && (
+            {currentSlide === 16 && (
               <Q4DeliverablesSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 20 && (
+            {currentSlide === 17 && (
+              <BatboxSuiteSlide
+                onNext={handleNext}
+                onPrev={handlePrev}
+              />
+            )}
+            {currentSlide === 18 && (
+              <DaikinExperienceSlide
+                onNext={handleNext}
+                onPrev={handlePrev}
+              />
+            )}
+            {currentSlide === 19 && (
               <SectionTitleSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
@@ -281,28 +273,28 @@ export default function App() {
                 title="Batbox Suite"
                 subtitle="Self-service platform • Queue system • Avatars • Player engagement"
                 accentColor="purple"
-                pageNumber={21}
+                pageNumber={20}
               />
             )}
-            {currentSlide === 21 && (
+            {currentSlide === 20 && (
               <BatboxSuiteIntroSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 22 && (
+            {currentSlide === 21 && (
               <StrategicPivotSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 23 && (
+            {currentSlide === 22 && (
               <BatboxEcosystemSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 24 && (
+            {currentSlide === 23 && (
               <SectionTitleSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
@@ -310,64 +302,64 @@ export default function App() {
                 title="Strategic Initiatives"
                 subtitle="AI development • CDP implementation • In-house tech team • Advertising revenue"
                 accentColor="blue"
-                pageNumber={25}
+                pageNumber={24}
               />
             )}
-            {currentSlide === 25 && (
+            {currentSlide === 24 && (
               <BatboxSuiteDemoSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 26 && (
+            {currentSlide === 25 && (
               <ShiftingDNASlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 27 && (
+            {currentSlide === 26 && (
               <CDPFoundationSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 28 && (
+            {currentSlide === 27 && (
               <AIOperationsSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 29 && (
+            {currentSlide === 28 && (
               <GamificationSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 30 && (
+            {currentSlide === 29 && (
               <ExecutionPlanSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 31 && (
+            {currentSlide === 30 && (
               <CustomerSupportSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 32 && (
+            {currentSlide === 31 && (
               <SuccessDefinitionSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide === 33 && (
+            {currentSlide === 32 && (
               <ThankYouSlide
                 onNext={handleNext}
                 onPrev={handlePrev}
               />
             )}
-            {currentSlide >= 34 && (
+            {currentSlide >= 33 && (
               <div className="size-full flex items-center justify-center bg-[#050505] text-white">
                 <p className="text-2xl">Slide {currentSlide + 1} goes here...</p>
               </div>

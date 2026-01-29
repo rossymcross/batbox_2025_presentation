@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "motion/react";
-import { Box, Monitor, ShieldCheck, Zap, Eye, ArrowRight, CheckCircle2, AlertTriangle } from "lucide-react";
+import React, { useEffect } from "react";
+import { motion } from "motion/react";
+import { Box, Monitor, ShieldCheck, Zap, Eye, ArrowRight, CheckCircle2 } from "lucide-react";
 
 interface TechnologyModernizationSlideProps {
   onNext: () => void;
@@ -32,21 +32,6 @@ const itemVariants = {
 };
 
 export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlideProps> = ({ onNext, onPrev }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-
-  const spotlightGradient = useMotionTemplate`radial-gradient(circle 700px at ${mouseX}px ${mouseY}px, rgba(6, 182, 212, 0.05), transparent 70%)`;
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
   useEffect(() => {
   }, [onNext, onPrev]);
 
@@ -64,68 +49,23 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
         }}
       />
 
-      {/* Radial Gradient Orbs */}
+      {/* Static Radial Gradient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.08, 0.15, 0.08],
-            x: [0, 40, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{
-            duration: 13,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-[10%] right-[5%] w-[800px] h-[800px] rounded-full"
+        <div
+          className="absolute top-[10%] right-[5%] w-[800px] h-[800px] rounded-full opacity-10"
           style={{
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.1, 0.18, 0.1],
-            x: [0, -30, 0],
-            y: [0, 40, 0]
-          }}
-          transition={{
-            duration: 11,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5
-          }}
-          className="absolute bottom-[10%] left-[10%] w-[700px] h-[700px] rounded-full"
+        <div
+          className="absolute bottom-[10%] left-[10%] w-[700px] h-[700px] rounded-full opacity-10"
           style={{
             background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
       </div>
-
-      {/* Mouse-Following Spotlight */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: spotlightGradient }}
-      />
-
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.015] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%)'
-        }}
-      />
 
       <div className="relative z-10 w-full h-full flex flex-col font-inter max-w-[1600px] mx-auto">
         {/* Header */}
@@ -152,23 +92,8 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="px-4 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/10 to-cyan-500/5 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-[0.15em] backdrop-blur-sm relative overflow-hidden"
+              className="px-4 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/10 to-cyan-500/5 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-[0.15em] backdrop-blur-sm"
             >
-              <motion.div
-                className="absolute inset-0 -translate-x-full"
-                animate={{
-                  translateX: ['100%', '200%']
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatDelay: 2
-                }}
-                style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.2), transparent)'
-                }}
-              />
               <span className="relative z-10">2025 Architecture</span>
             </motion.span>
           </div>
@@ -190,57 +115,25 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
           {/* Unity Upgrade */}
           <motion.div 
             variants={itemVariants}
-            onHoverStart={() => setHoveredCard(0)}
-            onHoverEnd={() => setHoveredCard(null)}
-            className="col-span-3 bg-gradient-to-br from-[#0c0c0e] to-[#0f1728] border border-cyan-500/30 rounded-3xl p-8 relative overflow-hidden group cursor-default flex flex-col"
+            className="col-span-3 bg-gradient-to-br from-[#0c0c0e] to-[#0f1728] border border-cyan-500/30 hover:border-cyan-500/50 rounded-3xl p-8 relative overflow-hidden group cursor-default flex flex-col transition-all duration-300"
             style={{
-              boxShadow: hoveredCard === 0
-                ? '0 0 60px rgba(6, 182, 212, 0.25), inset 0 0 40px rgba(6, 182, 212, 0.05)'
-                : '0 20px 60px rgba(0, 0, 0, 0.5)'
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)'
             }}
           >
             {/* Background Glow */}
-            <motion.div 
-              className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none"
+            <div 
+              className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-300"
               style={{
                 background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)',
                 filter: 'blur(80px)'
-              }}
-              animate={{
-                scale: hoveredCard === 0 ? [1, 1.3, 1.2] : [1, 1.1, 1],
-                opacity: hoveredCard === 0 ? [0.4, 0.6, 0.5] : [0.15, 0.25, 0.2]
-              }}
-              transition={{
-                duration: hoveredCard === 0 ? 2 : 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-
-            {/* Shimmer Effect */}
-            <motion.div
-              className="absolute inset-0 -translate-x-full pointer-events-none"
-              animate={hoveredCard === 0 ? {
-                translateX: ['100%', '200%']
-              } : {}}
-              transition={{
-                duration: 1.5,
-                ease: "easeInOut"
-              }}
-              style={{
-                background: 'linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.15), transparent)'
               }}
             />
             
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-4 mb-6">
-                <motion.div 
-                  className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
-                >
+                <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm hover:scale-110 transition-transform duration-300">
                   <Box className="w-8 h-8 text-cyan-400" strokeWidth={2} />
-                </motion.div>
+                </div>
                 <div>
                   <h3 
                     className="text-3xl font-black text-white tracking-[-0.01em]"
@@ -286,57 +179,25 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
           {/* Windows Upgrade */}
           <motion.div 
             variants={itemVariants}
-            onHoverStart={() => setHoveredCard(1)}
-            onHoverEnd={() => setHoveredCard(null)}
-            className="col-span-3 bg-gradient-to-br from-[#0c0c0e] to-[#1a1530] border border-blue-500/30 rounded-3xl p-8 relative overflow-hidden group cursor-default flex flex-col"
+            className="col-span-3 bg-gradient-to-br from-[#0c0c0e] to-[#1a1530] border border-blue-500/30 hover:border-blue-500/50 rounded-3xl p-8 relative overflow-hidden group cursor-default flex flex-col transition-all duration-300"
             style={{
-              boxShadow: hoveredCard === 1
-                ? '0 0 60px rgba(59, 130, 246, 0.25), inset 0 0 40px rgba(59, 130, 246, 0.05)'
-                : '0 20px 60px rgba(0, 0, 0, 0.5)'
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)'
             }}
           >
             {/* Background Glow */}
-            <motion.div 
-              className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none"
+            <div 
+              className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-300"
               style={{
                 background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
                 filter: 'blur(80px)'
-              }}
-              animate={{
-                scale: hoveredCard === 1 ? [1, 1.3, 1.2] : [1, 1.1, 1],
-                opacity: hoveredCard === 1 ? [0.4, 0.6, 0.5] : [0.15, 0.25, 0.2]
-              }}
-              transition={{
-                duration: hoveredCard === 1 ? 2 : 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-
-            {/* Shimmer Effect */}
-            <motion.div
-              className="absolute inset-0 -translate-x-full pointer-events-none"
-              animate={hoveredCard === 1 ? {
-                translateX: ['100%', '200%']
-              } : {}}
-              transition={{
-                duration: 1.5,
-                ease: "easeInOut"
-              }}
-              style={{
-                background: 'linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent)'
               }}
             />
             
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-4 mb-6">
-                <motion.div 
-                  className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 backdrop-blur-sm"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
-                >
+                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 backdrop-blur-sm hover:scale-110 transition-transform duration-300">
                   <Monitor className="w-8 h-8 text-blue-400" strokeWidth={2} />
-                </motion.div>
+                </div>
                 <div>
                   <h3 
                     className="text-3xl font-black text-white tracking-[-0.01em]"
@@ -382,38 +243,21 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
           {/* Reliability */}
           <motion.div 
             variants={itemVariants}
-            onHoverStart={() => setHoveredCard(2)}
-            onHoverEnd={() => setHoveredCard(null)}
-            className="col-span-2 bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-emerald-500/20 rounded-3xl p-6 relative overflow-hidden group cursor-default flex flex-col"
+            className="col-span-2 bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-emerald-500/20 hover:border-emerald-500/50 rounded-3xl p-6 relative overflow-hidden group cursor-default flex flex-col transition-all duration-300"
             style={{
-              boxShadow: hoveredCard === 2
-                ? '0 0 50px rgba(16, 185, 129, 0.2), inset 0 0 30px rgba(16, 185, 129, 0.05)'
-                : '0 20px 60px rgba(0, 0, 0, 0.5)'
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)'
             }}
           >
             {/* Background Glow */}
-            <motion.div 
-              className="absolute bottom-[-30%] left-[-20%] w-[300px] h-[300px] rounded-full pointer-events-none"
+            <div 
+              className="absolute bottom-[-30%] left-[-20%] w-[300px] h-[300px] rounded-full pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-300"
               style={{
                 background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)',
                 filter: 'blur(60px)'
               }}
-              animate={{
-                scale: hoveredCard === 2 ? [1, 1.3, 1.2] : [1, 1.1, 1],
-                opacity: hoveredCard === 2 ? [0.3, 0.5, 0.4] : [0.15, 0.25, 0.2]
-              }}
-              transition={{
-                duration: hoveredCard === 2 ? 2 : 6,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
             />
             
-            <motion.div 
-              className="flex items-center gap-3 mb-4"
-              whileHover={{ x: 5 }}
-              transition={{ duration: 0.3 }}
-            >
+            <div className="flex items-center gap-3 mb-4 group-hover:translate-x-1 transition-transform duration-300">
                <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 backdrop-blur-sm">
                   <ShieldCheck className="w-6 h-6 text-emerald-400" strokeWidth={2} />
                </div>
@@ -423,7 +267,7 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
                >
                  Reliability
                </h3>
-            </motion.div>
+            </div>
 
             <h4 className="text-emerald-400 font-bold mb-2 text-base">Always-On Operations</h4>
             <p className="text-gray-300 text-base mb-4 leading-relaxed">
@@ -462,38 +306,21 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
           {/* Efficiency */}
           <motion.div 
             variants={itemVariants}
-            onHoverStart={() => setHoveredCard(3)}
-            onHoverEnd={() => setHoveredCard(null)}
-            className="col-span-2 bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-orange-500/20 rounded-3xl p-6 relative overflow-hidden group cursor-default flex flex-col"
+            className="col-span-2 bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-orange-500/20 hover:border-orange-500/50 rounded-3xl p-6 relative overflow-hidden group cursor-default flex flex-col transition-all duration-300"
             style={{
-              boxShadow: hoveredCard === 3
-                ? '0 0 50px rgba(249, 115, 22, 0.2), inset 0 0 30px rgba(249, 115, 22, 0.05)'
-                : '0 20px 60px rgba(0, 0, 0, 0.5)'
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)'
             }}
           >
             {/* Background Glow */}
-            <motion.div 
-              className="absolute bottom-[-30%] left-[-20%] w-[300px] h-[300px] rounded-full pointer-events-none"
+            <div 
+              className="absolute bottom-[-30%] left-[-20%] w-[300px] h-[300px] rounded-full pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-300"
               style={{
                 background: 'radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, transparent 70%)',
                 filter: 'blur(60px)'
               }}
-              animate={{
-                scale: hoveredCard === 3 ? [1, 1.3, 1.2] : [1, 1.1, 1],
-                opacity: hoveredCard === 3 ? [0.3, 0.5, 0.4] : [0.15, 0.25, 0.2]
-              }}
-              transition={{
-                duration: hoveredCard === 3 ? 2 : 6,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
             />
             
-            <motion.div 
-              className="flex items-center gap-3 mb-4"
-              whileHover={{ x: 5 }}
-              transition={{ duration: 0.3 }}
-            >
+            <div className="flex items-center gap-3 mb-4 group-hover:translate-x-1 transition-transform duration-300">
                <div className="p-2.5 rounded-xl bg-orange-500/10 border border-orange-500/30 backdrop-blur-sm">
                   <Zap className="w-6 h-6 text-orange-400" strokeWidth={2} />
                </div>
@@ -503,7 +330,7 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
                >
                  Efficiency
                </h3>
-            </motion.div>
+            </div>
 
             <h4 className="text-orange-400 font-bold mb-2 text-base">Optimized Build Pipeline</h4>
             <p className="text-gray-300 text-base mb-4 leading-relaxed">
@@ -542,38 +369,21 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
           {/* Observability */}
           <motion.div 
             variants={itemVariants}
-            onHoverStart={() => setHoveredCard(4)}
-            onHoverEnd={() => setHoveredCard(null)}
-            className="col-span-2 bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-purple-500/20 rounded-3xl p-6 relative overflow-hidden group cursor-default flex flex-col"
+            className="col-span-2 bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-purple-500/20 hover:border-purple-500/50 rounded-3xl p-6 relative overflow-hidden group cursor-default flex flex-col transition-all duration-300"
             style={{
-              boxShadow: hoveredCard === 4
-                ? '0 0 50px rgba(168, 85, 247, 0.2), inset 0 0 30px rgba(168, 85, 247, 0.05)'
-                : '0 20px 60px rgba(0, 0, 0, 0.5)'
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)'
             }}
           >
             {/* Background Glow */}
-            <motion.div 
-              className="absolute bottom-[-30%] left-[-20%] w-[300px] h-[300px] rounded-full pointer-events-none"
+            <div 
+              className="absolute bottom-[-30%] left-[-20%] w-[300px] h-[300px] rounded-full pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-300"
               style={{
                 background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)',
                 filter: 'blur(60px)'
               }}
-              animate={{
-                scale: hoveredCard === 4 ? [1, 1.3, 1.2] : [1, 1.1, 1],
-                opacity: hoveredCard === 4 ? [0.3, 0.5, 0.4] : [0.15, 0.25, 0.2]
-              }}
-              transition={{
-                duration: hoveredCard === 4 ? 2 : 6,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
             />
             
-            <motion.div 
-              className="flex items-center gap-3 mb-4"
-              whileHover={{ x: 5 }}
-              transition={{ duration: 0.3 }}
-            >
+            <div className="flex items-center gap-3 mb-4 group-hover:translate-x-1 transition-transform duration-300">
                <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/30 backdrop-blur-sm">
                   <Eye className="w-6 h-6 text-purple-400" strokeWidth={2} />
                </div>
@@ -583,7 +393,7 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
                >
                  Observability
                </h3>
-            </motion.div>
+            </div>
 
             <h4 className="text-purple-400 font-bold mb-2 text-base">Real-Time Monitoring</h4>
             <p className="text-gray-300 text-base mb-4 leading-relaxed">
@@ -620,30 +430,6 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Floating Particles */}
-      {[...Array(10)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-cyan-400/20 rounded-full pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow: '0 0 10px rgba(6, 182, 212, 0.4)'
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 0.6, 0],
-            scale: [0, 1.5, 0]
-          }}
-          transition={{
-            duration: 5 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 4,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
     </div>
   );
 };

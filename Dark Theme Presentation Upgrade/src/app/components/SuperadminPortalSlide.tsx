@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "motion/react";
+import React, { useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Calendar, Building2, CreditCard, Shield, CheckCircle2, BarChart3, Play, X } from "lucide-react";
 import venuesImage from "../../assets/superadmin-venues.png";
 import adminPanelsVideo from "../../assets/batbox-admin-panels.mp4";
@@ -10,22 +10,8 @@ interface SuperadminPortalSlideProps {
 }
 
 export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ onNext, onPrev }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = React.useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  const spotlightGradient = useMotionTemplate`radial-gradient(circle 800px at ${mouseX}px ${mouseY}px, rgba(6, 182, 212, 0.06), transparent 70%)`;
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
 
   const handlePlayVideo = () => {
     setIsVideoPlaying(true);
@@ -60,68 +46,23 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
         }}
       />
 
-      {/* Radial Gradient Orbs */}
+      {/* Static Radial Gradient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.18, 0.1],
-            x: [0, -30, 0],
-            y: [0, 40, 0]
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-[10%] left-[15%] w-[900px] h-[900px] rounded-full"
+        <div
+          className="absolute top-[10%] left-[15%] w-[900px] h-[900px] rounded-full opacity-[0.14]"
           style={{
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.08, 0.15, 0.08],
-            x: [0, 40, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-          className="absolute bottom-[15%] right-[10%] w-[800px] h-[800px] rounded-full"
+        <div
+          className="absolute bottom-[15%] right-[10%] w-[800px] h-[800px] rounded-full opacity-[0.11]"
           style={{
             background: 'radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
       </div>
-
-      {/* Mouse-Following Spotlight */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: spotlightGradient }}
-      />
-
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.015] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%)'
-        }}
-      />
 
       <div className="relative z-10 w-full h-full flex flex-col font-inter max-w-[1600px] mx-auto">
         {/* Header Row */}
@@ -131,13 +72,12 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-center gap-5 mb-10"
         >
-          <motion.div 
-            className="w-14 h-14 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center"
-            whileHover={{ scale: 1.1, rotate: 5 }}
+          <div 
+            className="w-14 h-14 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center transition-transform duration-300 hover:scale-110"
             style={{ boxShadow: '0 0 20px rgba(6, 182, 212, 0.2)' }}
           >
             <Calendar className="w-7 h-7 text-cyan-400" strokeWidth={2} />
-          </motion.div>
+          </div>
           <div>
             <h1 
               className="text-6xl font-black tracking-[-0.02em]"
@@ -149,7 +89,7 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
                 textShadow: '0 4px 40px rgba(6, 182, 212, 0.2)'
               }}
             >
-              2026 Q1
+              2026 Development
             </h1>
             <p className="text-xl text-gray-300 font-semibold tracking-wide mt-1">Major Software Deliverables</p>
           </div>
@@ -181,21 +121,12 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
                 transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
               />
               
-              {/* Background glow */}
-              <motion.div 
-                className="absolute top-0 right-0 w-80 h-80 rounded-full"
+              {/* Background glow - static */}
+              <div 
+                className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-40"
                 style={{
                   background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)',
                   filter: 'blur(80px)'
-                }}
-                animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [0.3, 0.5, 0.3]
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut"
                 }}
               />
               
@@ -227,8 +158,7 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1.1 + index * 0.1, duration: 0.6 }}
-                      whileHover={{ x: 5, scale: 1.02 }}
-                      className={`flex items-center gap-4 p-4 rounded-xl bg-black/40 border transition-all duration-300 cursor-default ${
+                      className={`flex items-center gap-4 p-4 rounded-xl bg-black/40 border transition-all duration-300 cursor-default hover:translate-x-1 hover:scale-[1.02] ${
                         feature.color === 'cyan' ? 'border-cyan-500/20 hover:border-cyan-500/40' :
                         feature.color === 'emerald' ? 'border-emerald-500/20 hover:border-emerald-500/40' :
                         feature.color === 'orange' ? 'border-orange-500/20 hover:border-orange-500/40' :
@@ -238,14 +168,13 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)' 
                       }}
                     >
-                      <motion.div 
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
+                      <div 
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 hover:scale-110 ${
                           feature.color === 'cyan' ? 'bg-cyan-500/10 border border-cyan-500/30' :
                           feature.color === 'emerald' ? 'bg-emerald-500/10 border border-emerald-500/30' :
                           feature.color === 'orange' ? 'bg-orange-500/10 border border-orange-500/30' :
                           'bg-purple-500/10 border border-purple-500/30'
                         }`}
-                        whileHover={{ scale: 1.15, rotate: 5 }}
                       >
                         <feature.icon className={`w-6 h-6 ${
                           feature.color === 'cyan' ? 'text-cyan-400' :
@@ -253,7 +182,7 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
                           feature.color === 'orange' ? 'text-orange-400' :
                           'text-purple-400'
                         }`} strokeWidth={2} />
-                      </motion.div>
+                      </div>
                       <span className="text-lg text-white font-semibold tracking-[-0.01em]">{feature.text}</span>
                     </motion.div>
                   ))}
@@ -268,56 +197,22 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center justify-center relative overflow-hidden"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
           >
             <div className="relative w-full h-full flex items-center justify-center">
-              {/* Glowing orb behind image */}
-              <motion.div 
-                className="absolute inset-0 flex items-center justify-center"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.3, 0.5, 0.3]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
+              {/* Static glowing orb behind image */}
+              <div className="absolute inset-0 flex items-center justify-center">
                 <div 
-                  className="w-[500px] h-[500px] rounded-full"
+                  className="w-[500px] h-[500px] rounded-full opacity-40"
                   style={{
                     background: 'radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%)',
                     filter: 'blur(100px)'
                   }}
                 />
-              </motion.div>
-
-              {/* Rotating ring effect */}
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                animate={{ rotate: 360 }}
-                transition={{
-                  duration: 30,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              >
-                <div 
-                  className="w-[90%] h-[90%] rounded-full"
-                  style={{
-                    background: 'conic-gradient(from 0deg, transparent, rgba(6, 182, 212, 0.1), transparent)',
-                    filter: 'blur(30px)'
-                  }}
-                />
-              </motion.div>
+              </div>
               
               {/* Image Container */}
-              <motion.div
-                className="relative z-10 max-w-[85%] max-h-[90%] cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
+              <div
+                className="relative z-10 max-w-[85%] max-h-[90%] cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
                 onClick={handlePlayVideo}
               >
                 {/* Glowing border effect */}
@@ -327,23 +222,6 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
                     background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(168, 85, 247, 0.2))',
                     filter: 'blur(20px)',
                     opacity: 0.4
-                  }}
-                />
-
-                {/* Shimmer effect */}
-                <motion.div
-                  className="absolute inset-0 z-20 pointer-events-none rounded-2xl overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent)'
-                  }}
-                  animate={{
-                    x: ['-100%', '200%']
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear",
-                    repeatDelay: 2
                   }}
                 />
                 
@@ -358,75 +236,25 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
                 />
 
                 {/* Play Button Overlay */}
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center z-10"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: isHovered ? 1 : 0.7 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div
-                    className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border-2 border-white/40 flex items-center justify-center cursor-pointer"
+                <div className="absolute inset-0 flex items-center justify-center z-10 opacity-70 hover:opacity-100 transition-opacity duration-300">
+                  <div
+                    className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border-2 border-white/40 flex items-center justify-center cursor-pointer transition-transform duration-300 hover:scale-110"
                     style={{
                       boxShadow: '0 0 40px rgba(6, 182, 212, 0.4), 0 0 80px rgba(6, 182, 212, 0.2)'
                     }}
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.95 }}
-                    animate={{
-                      scale: isHovered ? 1.1 : 1
-                    }}
                   >
-                    {/* Pulsing ring effect */}
-                    <motion.div
-                      className="absolute inset-0 rounded-full border-2 border-cyan-400"
-                      animate={{
-                        scale: [1, 1.5, 1.5],
-                        opacity: [0.5, 0, 0]
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeOut"
-                      }}
-                    />
                     <Play 
                       className="w-8 h-8 text-white relative z-10 ml-1" 
                       fill="white"
                       strokeWidth={0}
                     />
-                  </motion.div>
-                </motion.div>
-              </motion.div>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Floating Particles */}
-      {[...Array(12)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 rounded-full pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            background: i % 2 === 0 ? 'rgba(6, 182, 212, 0.4)' : 'rgba(168, 85, 247, 0.4)',
-            boxShadow: i % 2 === 0 
-              ? '0 0 10px rgba(6, 182, 212, 0.6)' 
-              : '0 0 10px rgba(168, 85, 247, 0.6)'
-          }}
-          animate={{
-            y: [0, -120, 0],
-            opacity: [0, 0.8, 0],
-            scale: [0, 1.5, 0]
-          }}
-          transition={{
-            duration: 5 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 4,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
 
       {/* Video Modal */}
       <AnimatePresence>
@@ -447,8 +275,6 @@ export const SuperadminPortalSlide: React.FC<SuperadminPortalSlideProps> = ({ on
               transition={{ delay: 0.2 }}
               onClick={handleCloseVideo}
               className="absolute top-8 right-8 w-14 h-14 bg-white/10 border border-white/20 rounded-full backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all duration-300 z-[101]"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
               style={{ boxShadow: '0 0 30px rgba(0, 0, 0, 0.5)' }}
             >
               <X className="w-7 h-7" strokeWidth={2} />

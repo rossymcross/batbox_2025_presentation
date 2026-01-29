@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "motion/react";
 import { PieChart, Pie, Cell } from "recharts";
 import { CheckCircle2, CircleDashed, Clock, Layers } from "lucide-react";
@@ -64,7 +64,6 @@ const stats = [
 export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = ({ onNext, onPrev }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const [hoveredStat, setHoveredStat] = useState<number | null>(null);
 
   const spotlightGradient = useMotionTemplate`radial-gradient(circle 700px at ${mouseX}px ${mouseY}px, rgba(16, 185, 129, 0.05), transparent 70%)`;
 
@@ -94,43 +93,22 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
         }}
       />
 
-      {/* Radial Gradient Orbs */}
+      {/* Radial Gradient Orbs - Static */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.18, 0.1],
-            x: [0, 40, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
+        <div
           className="absolute top-[5%] right-[5%] w-[900px] h-[900px] rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)',
-            filter: 'blur(90px)'
+            filter: 'blur(90px)',
+            opacity: 0.14
           }}
         />
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.08, 0.15, 0.08],
-            x: [0, -30, 0],
-            y: [0, 40, 0]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
+        <div
           className="absolute bottom-[10%] left-[5%] w-[700px] h-[700px] rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%)',
-            filter: 'blur(90px)'
+            filter: 'blur(90px)',
+            opacity: 0.11
           }}
         />
       </div>
@@ -139,22 +117,6 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{ background: spotlightGradient }}
-      />
-
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.015] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%)'
-        }}
       />
 
       {/* Content */}
@@ -181,21 +143,6 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
               transition={{ delay: 0.3, duration: 0.8 }}
               className="px-5 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border border-emerald-500/30 text-emerald-400 text-sm font-semibold uppercase tracking-[0.15em] backdrop-blur-sm relative overflow-hidden translate-y-1"
             >
-              <motion.div
-                className="absolute inset-0 -translate-x-full"
-                animate={{
-                  translateX: ['100%', '200%']
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatDelay: 2
-                }}
-                style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent)'
-                }}
-              />
               <span className="relative z-10">May 2025 - January 2026</span>
             </motion.span>
           </div>
@@ -220,46 +167,19 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
                   duration: 0.8,
                   ease: [0.22, 1, 0.36, 1]
                 }}
-                onHoverStart={() => setHoveredStat(index)}
-                onHoverEnd={() => setHoveredStat(null)}
-                className={`flex items-center gap-6 p-6 rounded-2xl border ${stat.border} bg-gradient-to-br from-[#0c0c0e] to-[#151518] backdrop-blur-sm transition-all cursor-default relative overflow-hidden group`}
+                className={`flex items-center gap-6 p-6 rounded-2xl border ${stat.border} bg-gradient-to-br from-[#0c0c0e] to-[#151518] backdrop-blur-sm transition-all cursor-default relative overflow-hidden group hover:scale-[1.02]`}
                 style={{
-                  boxShadow: hoveredStat === index
-                    ? `0 0 40px ${stat.glowColor}, inset 0 0 20px ${stat.glowColor.replace('0.2', '0.05')}`
-                    : '0 8px 30px rgba(0, 0, 0, 0.4)'
+                  boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4)'
                 }}
               >
-                {/* Shimmer effect on hover */}
-                <motion.div
-                  className="absolute inset-0 -translate-x-full pointer-events-none"
-                  animate={hoveredStat === index ? {
-                    translateX: ['100%', '200%']
-                  } : {}}
-                  transition={{
-                    duration: 1.5,
-                    ease: "easeInOut"
-                  }}
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${stat.glowColor}, transparent)`
-                  }}
-                />
-
-                <motion.div 
-                  className={`p-4 rounded-xl bg-gradient-to-br ${stat.bgGradient} ${stat.color} relative`}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    boxShadow: hoveredStat === index ? `0 0 25px ${stat.glowColor}` : 'none'
-                  }}
+                <div 
+                  className={`p-4 rounded-xl bg-gradient-to-br ${stat.bgGradient} ${stat.color} relative transition-transform group-hover:scale-110`}
                 >
                   <stat.icon className="w-10 h-10" strokeWidth={2} />
-                </motion.div>
+                </div>
                 <div className="relative z-10">
                   <div 
                     className="text-5xl font-black mb-1 text-white tracking-tight"
-                    style={{
-                      textShadow: hoveredStat === index ? `0 0 30px ${stat.glowColor}` : 'none'
-                    }}
                   >
                     {stat.value}
                   </div>
@@ -285,17 +205,13 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(16, 185, 129, 0.02)'
             }}
           >
-            {/* Background Glow */}
-            <motion.div 
-              animate={{ 
-                scale: [1, 1.2, 1],
-                opacity: [0.15, 0.25, 0.15] 
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            {/* Background Glow - Static */}
+            <div 
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
               style={{
                 background: 'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)',
-                filter: 'blur(80px)'
+                filter: 'blur(80px)',
+                opacity: 0.2
               }}
             />
             
@@ -373,23 +289,21 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
                 {data.map((item, index) => (
                   <motion.div 
                     key={item.name} 
-                    className="flex items-center justify-between group/item p-2 rounded-lg hover:bg-white/5 transition-all cursor-default"
+                    className="flex items-center justify-between group/item p-2 rounded-lg hover:bg-white/5 transition-all cursor-default hover:translate-x-1"
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ 
                       delay: 1 + (index * 0.05),
                       duration: 0.5
                     }}
-                    whileHover={{ x: 5 }}
                   >
                     <div className="flex items-center gap-3">
-                      <motion.div 
-                        className="w-3 h-3 rounded-full" 
+                      <div 
+                        className="w-3 h-3 rounded-full transition-transform group-hover/item:scale-130" 
                         style={{ 
                           backgroundColor: item.color,
                           boxShadow: `0 0 15px ${item.color}80`
                         }} 
-                        whileHover={{ scale: 1.3 }}
                       />
                       <span className="text-gray-300 font-medium text-sm group-hover/item:text-white transition-colors">
                         {item.name}
@@ -405,30 +319,6 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
           </motion.div>
         </div>
       </div>
-
-      {/* Floating Particles */}
-      {[...Array(10)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-emerald-400/20 rounded-full pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)'
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 0.6, 0],
-            scale: [0, 1.5, 0]
-          }}
-          transition={{
-            duration: 5 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 4,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
     </div>
   );
 };

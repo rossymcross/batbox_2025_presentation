@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "motion/react";
-import { Gamepad2, CreditCard, Clock, Users, Store, Zap, Smartphone, RefreshCw, Monitor, DollarSign, Layers, Megaphone } from "lucide-react";
+import React from "react";
+import { motion } from "motion/react";
+import { Gamepad2, CreditCard, Clock, Users, Store, Zap, DollarSign, Layers, Megaphone } from "lucide-react";
 import batboxSuiteRevenueFlow from "../../assets/batbox-suite-revenue-flow.png";
 
 interface BatboxSuiteDemoSlideProps {
@@ -9,20 +9,6 @@ interface BatboxSuiteDemoSlideProps {
 }
 
 export const BatboxSuiteDemoSlide: React.FC<BatboxSuiteDemoSlideProps> = ({ onNext, onPrev }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const spotlightGradient = useMotionTemplate`radial-gradient(circle 800px at ${mouseX}px ${mouseY}px, rgba(16, 185, 129, 0.06), transparent 70%)`;
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
   return (
     <div className="w-screen h-screen bg-[#050505] text-white p-6 flex flex-col overflow-hidden relative selection:bg-emerald-500/5">
       {/* Background Effects */}
@@ -35,11 +21,6 @@ export const BatboxSuiteDemoSlide: React.FC<BatboxSuiteDemoSlideProps> = ({ onNe
           `,
           backgroundSize: '60px 60px'
         }}
-      />
-      
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: spotlightGradient }}
       />
 
       <div className="relative z-10 w-full h-full flex flex-col font-inter max-w-[1600px] mx-auto">

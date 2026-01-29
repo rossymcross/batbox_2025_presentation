@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "motion/react";
+import React from "react";
+import { motion } from "motion/react";
 import { Target, Calendar, Users } from "lucide-react";
 import batboxEcosystemImage from "../../assets/batbox-ecosystem.png";
 
@@ -29,23 +29,6 @@ const itemVariants = {
 };
 
 export const BatboxEcosystemSlide: React.FC<BatboxEcosystemSlideProps> = ({ onNext, onPrev }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const spotlightGradient = useMotionTemplate`radial-gradient(circle 800px at ${mouseX}px ${mouseY}px, rgba(168, 85, 247, 0.08), transparent 70%)`;
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  useEffect(() => {
-  }, [onNext, onPrev]);
-
   return (
     <div className="w-screen h-screen bg-[#050505] text-white p-10 flex flex-col overflow-hidden relative selection:bg-purple-500/5">
       {/* Animated Grid Background */}
@@ -60,68 +43,23 @@ export const BatboxEcosystemSlide: React.FC<BatboxEcosystemSlideProps> = ({ onNe
         }}
       />
 
-      {/* Radial Gradient Orbs */}
+      {/* Static Radial Gradient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.12, 0.2, 0.12],
-            x: [0, 40, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-[15%] left-[10%] w-[900px] h-[900px] rounded-full"
+        <div
+          className="absolute top-[15%] left-[10%] w-[900px] h-[900px] rounded-full opacity-[0.16]"
           style={{
             background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.1, 0.18, 0.1],
-            x: [0, -30, 0],
-            y: [0, 40, 0]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-          className="absolute bottom-[10%] right-[15%] w-[800px] h-[800px] rounded-full"
+        <div
+          className="absolute bottom-[10%] right-[15%] w-[800px] h-[800px] rounded-full opacity-[0.14]"
           style={{
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
       </div>
-
-      {/* Mouse-Following Spotlight */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: spotlightGradient }}
-      />
-
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.015] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%)'
-        }}
-      />
 
       <div className="relative z-10 w-full h-full flex flex-col font-inter max-w-[1600px] mx-auto">
         {/* Main Content - Two Columns */}
@@ -171,22 +109,14 @@ export const BatboxEcosystemSlide: React.FC<BatboxEcosystemSlideProps> = ({ onNe
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                whileHover={{ scale: 1.02, x: 5 }}
-                className="flex items-start gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-purple-500/20 relative overflow-hidden group cursor-default"
+                className="flex items-start gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-purple-500/20 relative overflow-hidden group cursor-default transition-all duration-300 hover:scale-[1.02] hover:translate-x-1"
                 style={{ boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4)' }}
               >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
-                />
-                <motion.div 
-                  className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/30 relative z-10"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
+                <div 
+                  className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/30 relative z-10 transition-transform duration-300 group-hover:scale-110"
                 >
                   <Target className="w-6 h-6 text-purple-400" strokeWidth={2} />
-                </motion.div>
+                </div>
                 <div className="relative z-10">
                   <div className="text-xs font-bold text-purple-400 uppercase tracking-[0.15em] mb-1.5">Focus</div>
                   <div className="text-white font-semibold leading-snug">Pivot from venue operations to automated commercial platform</div>
@@ -197,22 +127,14 @@ export const BatboxEcosystemSlide: React.FC<BatboxEcosystemSlideProps> = ({ onNe
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                whileHover={{ scale: 1.02, x: 5 }}
-                className="flex items-start gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-cyan-500/20 relative overflow-hidden group cursor-default"
+                className="flex items-start gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-cyan-500/20 relative overflow-hidden group cursor-default transition-all duration-300 hover:scale-[1.02] hover:translate-x-1"
                 style={{ boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4)' }}
               >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
-                />
-                <motion.div 
-                  className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 relative z-10"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
+                <div 
+                  className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 relative z-10 transition-transform duration-300 group-hover:scale-110"
                 >
                   <Calendar className="w-6 h-6 text-cyan-400" strokeWidth={2} />
-                </motion.div>
+                </div>
                 <div className="relative z-10">
                   <div className="text-xs font-bold text-cyan-400 uppercase tracking-[0.15em] mb-1.5">Timeline</div>
                   <div className="text-white font-semibold leading-snug">January – December 2026</div>
@@ -223,22 +145,14 @@ export const BatboxEcosystemSlide: React.FC<BatboxEcosystemSlideProps> = ({ onNe
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
-                whileHover={{ scale: 1.02, x: 5 }}
-                className="flex items-start gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-emerald-500/20 relative overflow-hidden group cursor-default"
+                className="flex items-start gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#0c0c0e] to-[#151518] border border-emerald-500/20 relative overflow-hidden group cursor-default transition-all duration-300 hover:scale-[1.02] hover:translate-x-1"
                 style={{ boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4)' }}
               >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
-                />
-                <motion.div 
-                  className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 relative z-10"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
+                <div 
+                  className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 relative z-10 transition-transform duration-300 group-hover:scale-110"
                 >
                   <Users className="w-6 h-6 text-emerald-400" strokeWidth={2} />
-                </motion.div>
+                </div>
                 <div className="relative z-10">
                   <div className="text-xs font-bold text-emerald-400 uppercase tracking-[0.15em] mb-1.5">Audience</div>
                   <div className="text-white font-semibold leading-snug">Internal Stakeholders & Strategic Partners</div>
@@ -258,39 +172,19 @@ export const BatboxEcosystemSlide: React.FC<BatboxEcosystemSlideProps> = ({ onNe
               transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="w-full h-full flex items-center justify-center relative"
             >
-              {/* Glowing border effect */}
+              {/* Static glowing border effect */}
               <div 
-                className="absolute inset-0 rounded-3xl"
+                className="absolute inset-0 rounded-3xl opacity-30"
                 style={{
                   background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.2))',
-                  filter: 'blur(30px)',
-                  opacity: 0.3
+                  filter: 'blur(30px)'
                 }}
               />
               
-              <motion.div
-                className="relative rounded-3xl overflow-hidden border border-purple-500/20 backdrop-blur-sm"
+              <div
+                className="relative rounded-3xl overflow-hidden border border-purple-500/20 backdrop-blur-sm transition-transform duration-300 hover:scale-[1.02]"
                 style={{ boxShadow: '0 20px 60px rgba(168, 85, 247, 0.2), 0 0 80px rgba(6, 182, 212, 0.1)' }}
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
               >
-                {/* Shimmer effect overlay */}
-                <motion.div
-                  className="absolute inset-0 z-10 pointer-events-none"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent)'
-                  }}
-                  animate={{
-                    x: ['-100%', '200%']
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear",
-                    repeatDelay: 2
-                  }}
-                />
-                
                 <img 
                   src={batboxEcosystemImage} 
                   alt="The Batbox Ecosystem" 
@@ -299,38 +193,11 @@ export const BatboxEcosystemSlide: React.FC<BatboxEcosystemSlideProps> = ({ onNe
                     filter: 'drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5))'
                   }}
                 />
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Floating Particles */}
-      {[...Array(12)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 rounded-full pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            background: i % 2 === 0 ? 'rgba(168, 85, 247, 0.4)' : 'rgba(6, 182, 212, 0.4)',
-            boxShadow: i % 2 === 0 
-              ? '0 0 10px rgba(168, 85, 247, 0.6)' 
-              : '0 0 10px rgba(6, 182, 212, 0.6)'
-          }}
-          animate={{
-            y: [0, -120, 0],
-            opacity: [0, 0.8, 0],
-            scale: [0, 1.5, 0]
-          }}
-          transition={{
-            duration: 5 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 4,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
       </div>
   );
 };

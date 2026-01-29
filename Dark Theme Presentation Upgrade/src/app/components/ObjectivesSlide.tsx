@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "motion/react";
 import { Target, Clock, Rocket, Users, Database, ArrowRight, Monitor, Hammer, RefreshCw, Layers, Gamepad2, PlayCircle, FolderKanban, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
 
@@ -10,8 +10,6 @@ interface ObjectivesSlideProps {
 export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const [hoveredObjective, setHoveredObjective] = useState<number | null>(null);
-  const [hoveredTechnical, setHoveredTechnical] = useState<number | null>(null);
 
   const spotlightGradient = useMotionTemplate`radial-gradient(circle 600px at ${mouseX}px ${mouseY}px, rgba(6, 182, 212, 0.06), transparent 70%)`;
 
@@ -112,40 +110,17 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
         }}
       />
 
-      {/* Radial Gradient Orbs */}
+      {/* Static Radial Gradient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.08, 0.15, 0.08],
-            x: [0, 40, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-[10%] right-[5%] w-[800px] h-[800px] rounded-full"
+        <div
+          className="absolute top-[10%] right-[5%] w-[800px] h-[800px] rounded-full opacity-10"
           style={{
             background: 'radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%)',
             filter: 'blur(80px)'
           }}
         />
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.1, 0.18, 0.1],
-            x: [0, -30, 0],
-            y: [0, 40, 0]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-          className="absolute bottom-[5%] left-[10%] w-[700px] h-[700px] rounded-full"
+        <div
+          className="absolute bottom-[5%] left-[10%] w-[700px] h-[700px] rounded-full opacity-15"
           style={{
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)',
             filter: 'blur(80px)'
@@ -159,22 +134,6 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
         style={{ background: spotlightGradient }}
       />
 
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.015] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%)'
-        }}
-      />
-
       <div className="relative z-10 w-full h-full max-w-[1600px] mx-auto flex gap-12 p-12 pt-20 font-inter">
         
         {/* Left Content - Primary Objectives */}
@@ -186,34 +145,10 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
           >
             {/* Enhanced Badge */}
             <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-white/8 to-white/3 border border-cyan-500/20 backdrop-blur-sm mb-8 relative overflow-hidden">
-              <motion.div
-                className="absolute inset-0 -translate-x-full"
-                animate={{
-                  translateX: ['100%', '200%']
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatDelay: 2
-                }}
-                style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.2), transparent)'
-                }}
-              />
-              <motion.span 
+              <span 
                 className="w-2.5 h-2.5 rounded-full bg-cyan-400 relative z-10"
                 style={{
                   boxShadow: '0 0 12px rgba(6, 182, 212, 0.8)'
-                }}
-                animate={{ 
-                  scale: [1, 1.3, 1],
-                  opacity: [1, 0.6, 1]
-                }}
-                transition={{ 
-                  duration: 2.5, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
                 }}
               />
               <span className="text-sm font-semibold tracking-[0.15em] text-cyan-400 uppercase relative z-10">
@@ -236,18 +171,10 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
 
             {/* Enhanced Description */}
             <div className="relative mb-10">
-              <motion.div
+              <div
                 className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-cyan-500 to-cyan-600 rounded-full"
                 style={{
                   boxShadow: '0 0 20px rgba(6, 182, 212, 0.5)'
-                }}
-                animate={{
-                  opacity: [0.6, 1, 0.6]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
                 }}
               />
               <p className="text-xl text-gray-300 leading-relaxed max-w-xl pl-6">
@@ -267,41 +194,17 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
                     duration: 0.8,
                     ease: [0.22, 1, 0.36, 1]
                   }}
-                  onHoverStart={() => setHoveredObjective(index)}
-                  onHoverEnd={() => setHoveredObjective(null)}
-                  className={`bg-gradient-to-br from-[#0c0c0e] to-[#151518] backdrop-blur-sm border ${obj.border} p-5 rounded-2xl flex items-start gap-4 relative overflow-hidden group cursor-default transition-all duration-300`}
+                  className={`bg-gradient-to-br from-[#0c0c0e] to-[#151518] backdrop-blur-sm border ${obj.border} p-5 rounded-2xl flex items-start gap-4 relative overflow-hidden group cursor-default transition-all duration-300 hover:border-opacity-60`}
                   style={{
-                    boxShadow: hoveredObjective === index 
-                      ? `0 0 40px ${obj.glowColor}, inset 0 0 20px ${obj.glowColor.replace('0.2', '0.05')}`
-                      : '0 4px 20px rgba(0, 0, 0, 0.3)'
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                   }}
                 >
-                  {/* Shimmer effect on hover */}
-                  <motion.div
-                    className="absolute inset-0 -translate-x-full pointer-events-none"
-                    animate={hoveredObjective === index ? {
-                      translateX: ['100%', '200%']
-                    } : {}}
-                    transition={{
-                      duration: 1.5,
-                      ease: "easeInOut"
-                    }}
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${obj.glowColor}, transparent)`
-                    }}
-                  />
-
                   {/* Icon Container */}
-                  <motion.div 
-                    className={`p-3 rounded-xl bg-gradient-to-br ${obj.bgGradient} ${obj.color} shrink-0 relative`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                    style={{
-                      boxShadow: hoveredObjective === index ? `0 0 25px ${obj.glowColor}` : 'none'
-                    }}
+                  <div 
+                    className={`p-3 rounded-xl bg-gradient-to-br ${obj.bgGradient} ${obj.color} shrink-0 relative transition-transform duration-300 group-hover:scale-110`}
                   >
                     <obj.icon size={22} strokeWidth={2} />
-                  </motion.div>
+                  </div>
 
                   {/* Text Content */}
                   <div className="flex-1 relative z-10">
@@ -321,20 +224,11 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
                     transition={{ delay: 0.5 + (index * 0.1), type: "spring", stiffness: 200 }}
                   >
                     <div className="relative">
-                      <motion.div
+                      <div
                         className="absolute inset-0 rounded-full"
                         style={{
                           background: 'radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%)',
                           filter: 'blur(10px)'
-                        }}
-                        animate={{
-                          scale: [1, 1.2, 1],
-                          opacity: [0.5, 0.8, 0.5]
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
                         }}
                       />
                       <CheckCircle2 className="text-emerald-400 relative z-10" size={36} strokeWidth={2} />
@@ -361,21 +255,12 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(6, 182, 212, 0.02)'
             }}
           >
-            {/* Background accent glow */}
-            <motion.div
-              className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full pointer-events-none"
+            {/* Static background accent glow */}
+            <div
+              className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full pointer-events-none opacity-40"
               style={{
                 background: 'radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%)',
                 filter: 'blur(60px)'
-              }}
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.5, 0.3]
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
               }}
             />
 
@@ -399,48 +284,22 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
                     duration: 0.6,
                     ease: [0.22, 1, 0.36, 1]
                   }}
-                  onHoverStart={() => setHoveredTechnical(index)}
-                  onHoverEnd={() => setHoveredTechnical(null)}
-                  className="flex items-center justify-between p-4 rounded-xl bg-black/20 border border-white/5 transition-all group relative overflow-hidden"
-                  style={{
-                    borderColor: hoveredTechnical === index ? 'rgba(6, 182, 212, 0.3)' : 'rgba(255, 255, 255, 0.05)',
-                    backgroundColor: hoveredTechnical === index ? 'rgba(6, 182, 212, 0.05)' : 'rgba(0, 0, 0, 0.2)'
-                  }}
+                  className="flex items-center justify-between p-4 rounded-xl bg-black/20 border border-white/5 transition-all duration-300 group relative overflow-hidden hover:border-cyan-500/30 hover:bg-cyan-500/5"
                 >
-                  {/* Hover glow effect */}
-                  <motion.div
-                    className="absolute inset-0 pointer-events-none"
-                    animate={hoveredTechnical === index ? {
-                      opacity: [0, 0.5, 0]
-                    } : { opacity: 0 }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: hoveredTechnical === index ? Infinity : 0
-                    }}
-                    style={{
-                      background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.2) 0%, transparent 70%)'
-                    }}
-                  />
-
                   <div className="flex items-center gap-4 relative z-10">
-                    <motion.div 
-                      className="p-2.5 rounded-lg bg-white/5 text-gray-400 group-hover:text-cyan-400 transition-colors"
-                      whileHover={{ scale: 1.1, rotate: 10 }}
-                      transition={{ duration: 0.2 }}
-                      style={{
-                        backgroundColor: hoveredTechnical === index ? 'rgba(6, 182, 212, 0.1)' : 'rgba(255, 255, 255, 0.05)'
-                      }}
+                    <div 
+                      className="p-2.5 rounded-lg bg-white/5 text-gray-400 group-hover:text-cyan-400 group-hover:bg-cyan-500/10 transition-all duration-300 group-hover:scale-110"
                     >
                       <goal.icon size={20} strokeWidth={2} />
-                    </motion.div>
+                    </div>
                     <span className="font-medium text-gray-300 text-sm group-hover:text-white transition-colors">
                       {goal.text}
                     </span>
                   </div>
                   
                   {/* Status Badge */}
-                  <motion.div 
-                    className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border relative z-10 ${
+                  <div 
+                    className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border relative z-10 transition-transform duration-300 hover:scale-105 ${
                       goal.status === 'completed' 
                         ? 'bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border-emerald-500/30 text-emerald-400' 
                         : goal.status === 'partial' 
@@ -454,40 +313,15 @@ export const ObjectivesSlide: React.FC<ObjectivesSlideProps> = ({ onNext, onPrev
                           ? '0 0 15px rgba(234, 179, 8, 0.3)'
                           : 'none'
                     }}
-                    whileHover={{ scale: 1.05 }}
                   >
                     {goal.status === 'completed' ? 'Done' : goal.status === 'partial' ? 'In Progress' : 'To Do'}
-                  </motion.div>
+                  </div>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Floating Particles */}
-      {[...Array(8)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-cyan-400/20 rounded-full pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow: '0 0 10px rgba(6, 182, 212, 0.4)'
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 0.6, 0],
-            scale: [0, 1.5, 0]
-          }}
-          transition={{
-            duration: 5 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 4,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
 
     </div>
   );

@@ -19,39 +19,20 @@ export const SuccessDefinitionSlide: React.FC<SuccessDefinitionSlideProps> = ({ 
 
   return (
     <div className="w-screen h-screen bg-[#050505] text-white font-sans p-10 flex flex-col overflow-hidden relative selection:bg-cyan-500/10">
-      {/* Ambient Background Effects */}
+      {/* Ambient Background Effects - Static */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div 
-          className="absolute top-[-10%] right-[10%] w-[900px] h-[900px] rounded-full"
+        <div 
+          className="absolute top-[-10%] right-[10%] w-[900px] h-[900px] rounded-full opacity-50"
           style={{
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
             filter: 'blur(100px)'
           }}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.4, 0.6, 0.4]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
         />
-        <motion.div 
-          className="absolute bottom-[-10%] left-[5%] w-[800px] h-[800px] rounded-full"
+        <div 
+          className="absolute bottom-[-10%] left-[5%] w-[800px] h-[800px] rounded-full opacity-40"
           style={{
             background: 'radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%)',
             filter: 'blur(100px)'
-          }}
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
           }}
         />
 
@@ -124,33 +105,14 @@ export const SuccessDefinitionSlide: React.FC<SuccessDefinitionSlideProps> = ({ 
                 >
                   <Check className="w-7 h-7 text-cyan-400" strokeWidth={3} />
                 </div>
-                <motion.div
-                  className="absolute inset-0 rounded-xl"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%)',
-                  }}
-                  animate={{
-                    opacity: [0, 0.5, 0],
-                    scale: [1, 1.2, 1]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: index * 0.3
-                  }}
-                />
               </motion.div>
 
               {/* Criterion Text */}
-              <motion.div 
-                className="flex-1"
-                whileHover={{ x: 10 }}
-                transition={{ duration: 0.3 }}
-              >
+              <div className="flex-1 transition-transform duration-300 hover:translate-x-2">
                 <p className="text-2xl text-gray-100 leading-relaxed font-medium">
                   {criterion}
                 </p>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -181,21 +143,13 @@ export const SuccessDefinitionSlide: React.FC<SuccessDefinitionSlideProps> = ({ 
             </p>
           </div>
 
-          {/* Glow effect */}
-          <motion.div
-            className="absolute inset-0 rounded-3xl"
+          {/* Static glow effect */}
+          <div
+            className="absolute inset-0 rounded-3xl opacity-40"
             style={{
               background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%)',
               filter: 'blur(30px)',
               zIndex: -1
-            }}
-            animate={{
-              opacity: [0.3, 0.6, 0.3]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
             }}
           />
         </motion.div>

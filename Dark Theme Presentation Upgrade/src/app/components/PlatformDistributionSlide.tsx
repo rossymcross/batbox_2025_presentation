@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "motion/react";
+import React from "react";
+import { motion } from "motion/react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Globe, Monitor, Smartphone, Gamepad2, FileText, LayoutGrid, Server } from "lucide-react";
 
@@ -49,21 +49,6 @@ const renderCustomizedLabel = (props: any) => {
 };
 
 export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps> = ({ onNext, onPrev }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const spotlightGradient = useMotionTemplate`radial-gradient(circle 700px at ${mouseX}px ${mouseY}px, rgba(139, 92, 246, 0.05), transparent 70%)`;
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
-
   return (
     <div className="w-screen h-screen bg-[#050505] text-white p-12 flex flex-col overflow-hidden relative">
       {/* Animated Grid Background */}
@@ -78,68 +63,23 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
         }}
       />
 
-      {/* Radial Gradient Orbs */}
+      {/* Static Radial Gradient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.18, 0.1],
-            x: [0, 50, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-[10%] right-[5%] w-[800px] h-[800px] rounded-full"
+        <div
+          className="absolute top-[10%] right-[5%] w-[800px] h-[800px] rounded-full opacity-[0.14]"
           style={{
             background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.08, 0.15, 0.08],
-            x: [0, -40, 0],
-            y: [0, 40, 0]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-          className="absolute bottom-[10%] left-[10%] w-[700px] h-[700px] rounded-full"
+        <div
+          className="absolute bottom-[10%] left-[10%] w-[700px] h-[700px] rounded-full opacity-[0.12]"
           style={{
             background: 'radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
       </div>
-
-      {/* Mouse-Following Spotlight */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: spotlightGradient }}
-      />
-
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.015] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulance type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%)'
-        }}
-      />
 
       {/* Navigation Controls */}
       <div className="absolute inset-0 z-0 flex">
@@ -173,24 +113,9 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="px-5 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-purple-500/5 border border-purple-500/30 text-purple-400 text-sm font-semibold uppercase tracking-[0.15em] backdrop-blur-sm relative overflow-hidden"
+              className="px-5 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-purple-500/5 border border-purple-500/30 text-purple-400 text-sm font-semibold uppercase tracking-[0.15em] backdrop-blur-sm"
             >
-              <motion.div
-                className="absolute inset-0 -translate-x-full"
-                animate={{
-                  translateX: ['100%', '200%']
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatDelay: 2
-                }}
-                style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent)'
-                }}
-              />
-              <span className="relative z-10">System Analysis</span>
+              System Analysis
             </motion.span>
           </div>
           <p 
@@ -211,7 +136,7 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
               duration: 1,
               ease: [0.22, 1, 0.36, 1]
             }}
-            className="col-span-7 bg-gradient-to-br from-[#0c0c0e] to-[#151518] rounded-3xl border border-purple-500/20 p-4 flex flex-col relative overflow-hidden group"
+            className="col-span-7 bg-gradient-to-br from-[#0c0c0e] to-[#151518] rounded-3xl border border-purple-500/20 hover:border-purple-500/50 transition-colors p-4 flex flex-col relative overflow-hidden group"
             style={{
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(139, 92, 246, 0.02)'
             }}
@@ -224,14 +149,9 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
                   }} 
              />
 
-             {/* Background Glow */}
-             <motion.div 
-               animate={{ 
-                 scale: [1, 1.2, 1],
-                 opacity: [0.15, 0.25, 0.15] 
-               }}
-               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+             {/* Static Background Glow */}
+             <div 
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none opacity-20"
                style={{
                  background: 'radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%)',
                  filter: 'blur(80px)'
@@ -316,7 +236,7 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
                   duration: 0.3,
                   ease: [0.22, 1, 0.36, 1]
                 }}
-                className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-gradient-to-br from-[#0c0c0e] to-[#151518] relative overflow-hidden"
+                className="flex items-center gap-4 p-4 rounded-xl border border-white/10 hover:border-white/30 transition-colors bg-gradient-to-br from-[#0c0c0e] to-[#151518] relative overflow-hidden"
                 style={{
                   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                 }}
@@ -373,31 +293,6 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
           </div>
         </div>
       </div>
-
-      {/* Floating Particles */}
-      {[...Array(10)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-purple-400/20 rounded-full pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow: '0 0 10px rgba(139, 92, 246, 0.4)'
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 0.6, 0],
-            scale: [0, 1.5, 0]
-          }}
-          transition={{
-            duration: 5 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 4,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
-
     </div>
   );
 };

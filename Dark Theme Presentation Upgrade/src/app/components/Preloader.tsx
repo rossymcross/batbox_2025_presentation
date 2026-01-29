@@ -8,7 +8,7 @@ import batboxLogo from "../../assets/b48a003eb09a9aa603c90fc81f3e8997a64d6e61.pn
 import sizzleReelVideo from "../../assets/Sizzle Reel_Final B.mp4";
 import stadiumSequenceVideo from "../../assets/Stadium_Sequence.mp4";
 import heroMomentVideo from "../../assets/Hero_Moment_Concept_02b_30s (1).mp4";
-import heroMoment03Video from "../../assets/Hero_Moment_Concept_03 (1).mp4";
+import heroMoment01Video from "../../assets/Hero_Moment_Concept_01.mp4";
 import batboxSuiteAVideo from "../../assets/BatboxSuite_A (2).mp4";
 import batboxSuiteBVideo from "../../assets/BatboxSuite_B (2).mp4";
 import batboxSuiteCVideo from "../../assets/BatboxSuite_C (2).mp4";
@@ -24,7 +24,7 @@ const videosToPreload = [
   sizzleReelVideo,
   stadiumSequenceVideo,
   heroMomentVideo,
-  heroMoment03Video,
+  heroMoment01Video,
   batboxSuiteAVideo,
   batboxSuiteBVideo,
   batboxSuiteCVideo,
@@ -219,7 +219,7 @@ export const Preloader: React.FC<PreloaderProps> = memo(({ onComplete }) => {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            Batbox Presentation
+            Batbox Board Meeting 2026
           </h1>
         </motion.div>
 

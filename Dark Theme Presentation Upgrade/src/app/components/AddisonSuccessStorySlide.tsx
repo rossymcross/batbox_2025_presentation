@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "motion/react";
+import React from "react";
+import { motion } from "motion/react";
 import ratingImage from "../../assets/ccbf243e976ecc624a525a48a748fabfe54f2b15.png";
 import { ArrowRight, Star } from "lucide-react";
 
@@ -122,32 +122,6 @@ const ScrollingColumn = ({ items, direction = "up", speed = 25 }: { items: typeo
 };
 
 export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> = ({ onNext, onPrev }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const spotlightGradient = useMotionTemplate`radial-gradient(circle 700px at ${mouseX}px ${mouseY}px, rgba(16, 185, 129, 0.05), transparent 70%)`;
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.code === "Space") {
-        onNext();
-      } else if (e.key === "ArrowLeft") {
-        onPrev();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onNext, onPrev]);
-
   return (
     <div className="w-screen h-screen bg-[#050505] text-white overflow-hidden relative flex flex-col">
       <style>{`
@@ -159,9 +133,17 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
+        /* CTA button hover effect */
+        .cta-button:hover {
+          box-shadow: 0 0 60px rgba(16, 185, 129, 0.6), 0 15px 50px rgba(0, 0, 0, 0.6) !important;
+          transform: scale(1.05);
+        }
+        .cta-button:active {
+          transform: scale(0.95);
+        }
       `}</style>
 
-      {/* Animated Grid Background */}
+      {/* Grid Background */}
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -173,68 +155,23 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
         }}
       />
 
-      {/* Radial Gradient Orbs */}
+      {/* Static Radial Gradient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.12, 0.2, 0.12],
-            x: [0, 60, 0],
-            y: [0, -40, 0]
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[1000px] h-[1000px] rounded-full"
+        <div
+          className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[1000px] h-[1000px] rounded-full opacity-[0.15]"
           style={{
             background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.1, 0.18, 0.1],
-            x: [0, -50, 0],
-            y: [0, 50, 0]
-          }}
-          transition={{
-            duration: 13,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5
-          }}
-          className="absolute bottom-[15%] right-[15%] w-[800px] h-[800px] rounded-full"
+        <div
+          className="absolute bottom-[15%] right-[15%] w-[800px] h-[800px] rounded-full opacity-[0.12]"
           style={{
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
             filter: 'blur(90px)'
           }}
         />
       </div>
-
-      {/* Mouse-Following Spotlight */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: spotlightGradient }}
-      />
-
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.015] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%)'
-        }}
-      />
 
       <div className="relative z-10 w-full h-full max-w-[1600px] mx-auto flex gap-8 p-8 items-center font-inter">
         
@@ -253,23 +190,8 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="mb-8"
           >
-            <span className="px-6 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border border-emerald-500/30 text-emerald-400 backdrop-blur-md text-sm font-bold tracking-[0.15em] uppercase relative overflow-hidden">
-              <motion.div
-                className="absolute inset-0 -translate-x-full"
-                animate={{
-                  translateX: ['100%', '200%']
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatDelay: 2
-                }}
-                style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent)'
-                }}
-              />
-              <span className="relative z-10">Ongoing Success Story</span>
+            <span className="px-6 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border border-emerald-500/30 text-emerald-400 backdrop-blur-md text-sm font-bold tracking-[0.15em] uppercase">
+              Ongoing Success Story
             </span>
           </motion.div>
 
@@ -302,17 +224,12 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
               className="bg-gradient-to-br from-[#0c0c0e] to-[#151518] p-6 rounded-2xl border border-white/10 inline-flex flex-col items-center relative"
               style={{ boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(234, 179, 8, 0.1)' }}
             >
-              <motion.div 
+              <div 
                 className="absolute -top-3 -right-3 w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center text-black font-black text-sm shadow-lg"
-                animate={{ 
-                  y: [0, -8, 0],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 style={{ boxShadow: '0 10px 30px rgba(234, 179, 8, 0.5)' }}
               >
                 4.6
-              </motion.div>
+              </div>
               <img src={ratingImage} alt="4.6 Stars - 137 reviews" className="h-10 w-auto object-contain mb-2" />
               <span className="text-gray-300 text-sm font-bold uppercase tracking-[0.1em]">Google Reviews Rating</span>
             </div>
@@ -323,16 +240,8 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full text-white font-black text-lg transition-all duration-300 flex items-center gap-3 z-50 cursor-pointer pointer-events-auto"
+            className="cta-button group relative px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full text-white font-black text-lg transition-all duration-300 flex items-center gap-3 z-50 cursor-pointer pointer-events-auto"
             style={{ boxShadow: '0 0 40px rgba(16, 185, 129, 0.4), 0 10px 40px rgba(0, 0, 0, 0.5)' }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 0 60px rgba(16, 185, 129, 0.6), 0 15px 50px rgba(0, 0, 0, 0.6)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.4), 0 10px 40px rgba(0, 0, 0, 0.5)';
-            }}
             onClick={(e) => {
               e.stopPropagation();
               window.open('https://takoha-test.com/batbox-analytics/', '_blank');
@@ -350,31 +259,6 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
         </div>
 
       </div>
-
-      {/* Floating Particles */}
-      {[...Array(15)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-emerald-400/20 rounded-full pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)'
-          }}
-          animate={{
-            y: [0, -120, 0],
-            opacity: [0, 0.7, 0],
-            scale: [0, 1.8, 0]
-          }}
-          transition={{
-            duration: 6 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
-
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "motion/react";
-import { Clock, Monitor, ArrowRight, TrendingUp, Users, Settings, Smartphone, Zap, RefreshCw, Server } from "lucide-react";
+import React from "react";
+import { motion } from "motion/react";
+import { Clock, Monitor, TrendingUp, Users, Settings, Smartphone, Zap, RefreshCw, Server } from "lucide-react";
 import platformShiftImage from "../../assets/platform-shift-dna.png";
 
 interface PlatformShiftSlideProps {
@@ -9,20 +9,6 @@ interface PlatformShiftSlideProps {
 }
 
 export const PlatformShiftSlide: React.FC<PlatformShiftSlideProps> = ({ onNext, onPrev }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const spotlightGradient = useMotionTemplate`radial-gradient(circle 800px at ${mouseX}px ${mouseY}px, rgba(34, 197, 94, 0.06), transparent 70%)`;
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
   const currentStateItems = [
     { text: "Staff-mediated sessions (High Labor Cost)", icon: Users },
     { text: "Long play sessions (Low Turnover)", icon: Clock },
@@ -49,11 +35,6 @@ export const PlatformShiftSlide: React.FC<PlatformShiftSlideProps> = ({ onNext, 
           `,
           backgroundSize: '60px 60px'
         }}
-      />
-      
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: spotlightGradient }}
       />
 
       <div className="relative z-10 w-full h-full flex flex-col font-inter max-w-[1600px] mx-auto">
