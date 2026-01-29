@@ -30,3 +30,10 @@ new_update/
 # Figma export copies / archived versions (do not commit)
 new_update*/
 Create Presentation Page*/
+
+# Video files (too large for git)
+*.mp4
+*.mov
+*.avi
+*.webm
+*.mkv
