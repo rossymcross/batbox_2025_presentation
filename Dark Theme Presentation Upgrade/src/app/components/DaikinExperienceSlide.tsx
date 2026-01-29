@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "motion/react";
 import { Play, Calendar, ChevronLeft, ChevronRight, X } from "lucide-react";
 import sizzleReelCover from "../../assets/sizzle-reel-cover.png";
-import sizzleReelVideo from "../../assets/Sizzle Reel.mp4";
+import sizzleReelVideo from "../../assets/Sizzle Reel_Final B.mp4";
 import stadiumSequenceCover from "../../assets/stadium-sequence-cover.png";
 import stadiumSequenceVideo from "../../assets/Stadium_Sequence.mp4";
 import venusStadiumCover from "../../assets/venus-stadium-cover.png";
@@ -18,6 +18,14 @@ interface DaikinExperienceSlideProps {
 const videos = [
   {
     id: 1,
+    thumbnail: sizzleReelCover,
+    videoSrc: sizzleReelVideo,
+    title: "Sizzle Reel",
+    subtitle: "2026 Q1 Preview",
+    description: "Experience the future of Batbox gaming with stunning visuals and immersive gameplay"
+  },
+  {
+    id: 2,
     thumbnail: venusStadiumCover,
     videoSrc: heroMomentVideo,
     title: "Hero Moments",
@@ -25,20 +33,12 @@ const videos = [
     description: "Epic cinematic hero moments with dramatic camera angles and celebration sequences in the Venus Stadium"
   },
   {
-    id: 2,
+    id: 3,
     thumbnail: stadiumSequenceCover,
     videoSrc: stadiumSequenceVideo,
     title: "Venus Stadium",
     subtitle: "Daikin Park Earth",
     description: "Experience the stunning Daikin Park Earth venue with dynamic lighting and immersive crowd atmosphere"
-  },
-  {
-    id: 3,
-    thumbnail: sizzleReelCover,
-    videoSrc: sizzleReelVideo,
-    title: "Sizzle Reel",
-    subtitle: "2026 Q1 Preview",
-    description: "Experience the future of Batbox gaming with stunning visuals and immersive gameplay"
   },
   {
     id: 4,

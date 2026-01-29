@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "motion/react";
-import { PieChart, Pie, Cell, Tooltip, Sector } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 import { CheckCircle2, CircleDashed, Clock, Layers } from "lucide-react";
 
 interface DevelopmentSummarySlideProps {
@@ -61,33 +61,9 @@ const stats = [
   },
 ];
 
-// Custom active shape for hover effect
-const renderActiveShape = (props: any) => {
-  const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
-
-  return (
-    <g>
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius - 5}
-        outerRadius={outerRadius + 12}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-        style={{
-          filter: 'drop-shadow(0 0 20px ' + fill + ')',
-          transition: 'all 0.3s ease'
-        }}
-      />
-    </g>
-  );
-};
-
 export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = ({ onNext, onPrev }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
   const [hoveredStat, setHoveredStat] = useState<number | null>(null);
 
   const spotlightGradient = useMotionTemplate`radial-gradient(circle 700px at ${mouseX}px ${mouseY}px, rgba(16, 185, 129, 0.05), transparent 70%)`;
@@ -103,14 +79,6 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
 
   useEffect(() => {
   }, [onNext, onPrev]);
-
-  const onPieEnter = (_: any, index: number) => {
-    setActiveIndex(index);
-  };
-
-  const onPieLeave = () => {
-    setActiveIndex(undefined);
-  };
 
   return (
     <div className="w-screen h-screen bg-[#050505] text-white px-12 pt-10 pb-24 flex flex-col overflow-hidden relative selection:bg-emerald-500/5">
@@ -353,37 +321,17 @@ export const DevelopmentSummarySlide: React.FC<DevelopmentSummarySlideProps> = (
                     startAngle={90}
                     endAngle={-270}
                     stroke="none"
-                    activeIndex={activeIndex}
-                    activeShape={renderActiveShape}
-                    onMouseEnter={onPieEnter}
-                    onMouseLeave={onPieLeave}
                   >
                     {data.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={entry.color}
                         style={{ 
-                          cursor: 'pointer',
-                          transition: 'all 0.3s ease'
+                          cursor: 'default'
                         }}
                       />
                     ))}
                   </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(12, 12, 14, 0.95)', 
-                      borderColor: 'rgba(16, 185, 129, 0.3)',
-                      borderRadius: '16px',
-                      color: '#fff',
-                      fontSize: '16px',
-                      padding: '16px 20px',
-                      boxShadow: '0 10px 40px rgba(0,0,0,0.7)',
-                      backdropFilter: 'blur(10px)'
-                    }}
-                    itemStyle={{ color: '#fff', fontWeight: 600 }}
-                    cursor={false}
-                    formatter={(value: number) => `${value}%`}
-                  />
                 </PieChart>
                 
                 {/* Center Stat */}

@@ -345,7 +345,7 @@ export const TechnologyModernizationSlide: React.FC<TechnologyModernizationSlide
                     Windows Upgrade
                   </h3>
                   <div className="flex items-center gap-2 text-sm mt-1">
-                    <span className="text-red-400 line-through font-medium">Windows 7 Req.</span>
+                    <span className="text-red-400 line-through font-medium">Windows 7</span>
                     <ArrowRight className="w-3 h-3 text-gray-500" />
                     <span className="text-blue-400 font-bold">Windows 10/11 Ready</span>
                   </div>

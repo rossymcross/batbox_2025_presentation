@@ -472,7 +472,7 @@ export const SystemArchitectureContinuedSlide: React.FC<SystemArchitectureContin
 
               {/* Title */}
               <h3 
-                className="text-xl font-black text-white tracking-[-0.01em] mb-3"
+                className="text-3xl font-black text-white tracking-[-0.01em] mb-4"
                 style={{
                   textShadow: '0 4px 30px rgba(16, 185, 129, 0.2), 0 2px 15px rgba(0, 0, 0, 0.5)'
                 }}
@@ -481,7 +481,7 @@ export const SystemArchitectureContinuedSlide: React.FC<SystemArchitectureContin
               </h3>
 
               {/* Features Grid */}
-              <div className="grid grid-cols-2 gap-2.5 flex-1">
+              <div className="grid grid-cols-2 gap-3 flex-1">
                 {[
                   { icon: UserCheck, title: "End-to-End Demo Flow", desc: "Player selection, duration choice, SMS verification." },
                   { icon: Calendar, title: "Smart Scheduling", desc: "Logic tailored for IAAPA demo sessions." },
@@ -490,19 +490,19 @@ export const SystemArchitectureContinuedSlide: React.FC<SystemArchitectureContin
                 ].map((feature, idx) => (
                   <motion.div 
                     key={idx}
-                    className="bg-black/30 p-3 rounded-xl border border-white/5 hover:border-emerald-500/20 transition-all group/feature"
+                    className="bg-black/30 p-4 rounded-xl border border-white/5 hover:border-emerald-500/20 transition-all group/feature"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 + idx * 0.1 }}
                     whileHover={{ y: -2 }}
                   >
-                    <div className="flex items-start gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover/feature:bg-emerald-500/20 transition-colors">
-                        <feature.icon className="w-3.5 h-3.5 text-emerald-400" strokeWidth={2} />
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover/feature:bg-emerald-500/20 transition-colors">
+                        <feature.icon className="w-5 h-5 text-emerald-400" strokeWidth={2} />
                       </div>
                       <div className="min-w-0">
-                        <div className="text-xs font-bold text-white mb-0.5 truncate">{feature.title}</div>
-                        <div className="text-[11px] text-gray-400 leading-snug">{feature.desc}</div>
+                        <div className="text-base font-bold text-white mb-1">{feature.title}</div>
+                        <div className="text-sm text-gray-400 leading-snug">{feature.desc}</div>
                       </div>
                     </div>
                   </motion.div>
@@ -600,29 +600,6 @@ export const SystemArchitectureContinuedSlide: React.FC<SystemArchitectureContin
                 </div>
               </div>
 
-              {/* Features */}
-              <div className="space-y-3 mt-auto">
-                {[
-                  { icon: Users, label: "Direct Profile Connection" }
-                ].map((item, idx) => (
-                  <motion.div 
-                    key={idx}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-cyan-500/5 border border-cyan-500/20 group/item"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1 + idx * 0.1 }}
-                    whileHover={{ x: 3 }}
-                  >
-                    <div className="bg-cyan-500/10 p-2 rounded-lg group-hover/item:bg-cyan-500/20 transition-colors">
-                      <item.icon className="w-4 h-4 text-cyan-400" strokeWidth={2} />
-                    </div>
-                    <div>
-                      <div className="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Feature</div>
-                      <div className="text-sm font-bold text-white">{item.label}</div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
             </div>
           </motion.div>
         </motion.div>

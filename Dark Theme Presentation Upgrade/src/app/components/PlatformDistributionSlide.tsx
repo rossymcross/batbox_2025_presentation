@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "motion/react";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Sector } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Globe, Monitor, Smartphone, Gamepad2, FileText, LayoutGrid, Server } from "lucide-react";
 
 interface PlatformDistributionSlideProps {
@@ -17,58 +17,6 @@ const data = [
   { name: "Waivers", value: 88, percentage: 5.3, color: "#22C55E", icon: FileText }, // Green
   { name: "Other", value: 196, percentage: 11.8, color: "#64748B", icon: LayoutGrid }, // Slate
 ];
-
-// Active shape renderer for hover effect - makes segment "pop out"
-const renderActiveShape = (props: any) => {
-  const {
-    cx, cy, innerRadius, outerRadius, startAngle, endAngle,
-    fill, payload
-  } = props;
-  
-  return (
-    <g>
-      {/* Glow effect behind the segment */}
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius - 8}
-        outerRadius={outerRadius + 25}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-        opacity={0.3}
-        style={{ filter: 'blur(15px)' }}
-      />
-      {/* Main expanded segment */}
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius - 5}
-        outerRadius={outerRadius + 20}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-        stroke={fill}
-        strokeWidth={2}
-        style={{ 
-          filter: `drop-shadow(0 0 20px ${fill}80)`,
-          transition: 'all 0.3s ease-out'
-        }}
-      />
-      {/* Inner highlight ring */}
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius - 5}
-        outerRadius={innerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-        opacity={0.8}
-      />
-    </g>
-  );
-};
 
 // Custom label renderer
 const renderCustomizedLabel = (props: any) => {
@@ -103,18 +51,8 @@ const renderCustomizedLabel = (props: any) => {
 export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps> = ({ onNext, onPrev }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const spotlightGradient = useMotionTemplate`radial-gradient(circle 700px at ${mouseX}px ${mouseY}px, rgba(139, 92, 246, 0.05), transparent 70%)`;
-
-  // Handler for pie chart hover
-  const onPieEnter = useCallback((_: any, index: number) => {
-    setActiveIndex(index);
-  }, []);
-
-  const onPieLeave = useCallback(() => {
-    setActiveIndex(null);
-  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -315,10 +253,6 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
                       stroke="none"
                       labelLine={false}
                       label={renderCustomizedLabel}
-                      activeIndex={activeIndex !== null ? activeIndex : undefined}
-                      activeShape={renderActiveShape}
-                      onMouseEnter={onPieEnter}
-                      onMouseLeave={onPieLeave}
                     >
                       {data.map((entry, index) => (
                         <Cell 
@@ -326,27 +260,11 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
                           fill={entry.color} 
                           stroke={entry.color}
                           style={{
-                            opacity: activeIndex !== null && activeIndex !== index ? 0.4 : 1,
-                            transition: 'opacity 0.3s ease-out',
-                            cursor: 'pointer'
+                            cursor: 'default'
                           }}
                         />
                       ))}
                     </Pie>
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'rgba(12, 12, 14, 0.95)', 
-                        borderColor: 'rgba(139, 92, 246, 0.3)',
-                        borderRadius: '16px',
-                        color: '#fff',
-                        fontSize: '16px',
-                        padding: '12px 16px',
-                        boxShadow: '0 10px 40px rgba(0,0,0,0.7)',
-                        backdropFilter: 'blur(10px)'
-                      }}
-                      itemStyle={{ color: '#fff', fontWeight: 600 }}
-                      formatter={(value: number) => [`${value} Tasks`, 'Volume']}
-                    />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -390,84 +308,40 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
                 key={item.name}
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ 
-                  opacity: activeIndex !== null && activeIndex !== index ? 0.5 : 1,
-                  x: 0,
-                  scale: activeIndex === index ? 1.02 : 1
+                  opacity: 1,
+                  x: 0
                 }}
                 transition={{ 
                   delay: 0.6 + (index * 0.08),
                   duration: 0.3,
                   ease: [0.22, 1, 0.36, 1]
                 }}
-                onHoverStart={() => setActiveIndex(index)}
-                onHoverEnd={() => setActiveIndex(null)}
-                className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-gradient-to-br from-[#0c0c0e] to-[#151518] transition-all group cursor-pointer relative overflow-hidden"
+                className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-gradient-to-br from-[#0c0c0e] to-[#151518] relative overflow-hidden"
                 style={{
-                  boxShadow: activeIndex === index
-                    ? `0 0 40px ${item.color}50, inset 0 0 30px ${item.color}15`
-                    : '0 4px 20px rgba(0, 0, 0, 0.3)',
-                  borderColor: activeIndex === index ? `${item.color}60` : 'rgba(255, 255, 255, 0.1)',
-                  transform: activeIndex === index ? 'translateX(-8px)' : 'translateX(0)'
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                 }}
               >
-                {/* Shimmer effect on hover */}
-                <motion.div
-                  className="absolute inset-0 -translate-x-full pointer-events-none"
-                  animate={activeIndex === index ? {
-                    translateX: ['100%', '200%']
-                  } : {}}
-                  transition={{
-                    duration: 1.5,
-                    ease: "easeInOut"
-                  }}
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${item.color}30, transparent)`
-                  }}
-                />
-
-                {/* Left accent bar when active */}
-                <motion.div
-                  className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl"
-                  animate={{
-                    opacity: activeIndex === index ? 1 : 0,
-                    scaleY: activeIndex === index ? 1 : 0
-                  }}
-                  transition={{ duration: 0.2 }}
-                  style={{ backgroundColor: item.color }}
-                />
-
-                <motion.div 
+                <div 
                   className="p-3 rounded-xl relative shrink-0"
                   style={{ 
-                    backgroundColor: activeIndex === index ? `${item.color}40` : `${item.color}20`,
-                    color: item.color,
-                    boxShadow: activeIndex === index ? `0 0 20px ${item.color}50` : 'none'
+                    backgroundColor: `${item.color}20`,
+                    color: item.color
                   }}
-                  animate={{ 
-                    scale: activeIndex === index ? 1.1 : 1,
-                    rotate: activeIndex === index ? 5 : 0
-                  }}
-                  transition={{ duration: 0.3 }}
                 >
                   <item.icon className="w-6 h-6" strokeWidth={2} />
-                </motion.div>
+                </div>
                 
                 <div className="flex-1 min-w-0 relative z-10">
                   <div className="flex justify-between items-baseline mb-2">
                     <h4 className="font-bold text-base text-white truncate">{item.name}</h4>
-                    <motion.span 
+                    <span 
                       className="text-xl font-black ml-3"
-                      animate={{
-                        scale: activeIndex === index ? 1.15 : 1
-                      }}
-                      transition={{ duration: 0.2 }}
                       style={{ 
-                        color: item.color,
-                        textShadow: activeIndex === index ? `0 0 30px ${item.color}` : 'none'
+                        color: item.color
                       }}
                     >
                       {item.percentage}%
-                    </motion.span>
+                    </span>
                   </div>
                   
                   {/* Progress Bar */}
@@ -476,7 +350,7 @@ export const PlatformDistributionSlide: React.FC<PlatformDistributionSlideProps>
                       initial={{ width: 0 }}
                       animate={{ 
                         width: `${item.percentage}%`,
-                        boxShadow: activeIndex === index ? `0 0 20px ${item.color}` : `0 0 10px ${item.color}80`
+                        boxShadow: `0 0 10px ${item.color}80`
                       }}
                       transition={{ 
                         duration: 1.5, 

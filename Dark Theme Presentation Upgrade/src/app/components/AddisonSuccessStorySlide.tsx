@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "motion/react";
 import ratingImage from "../../assets/ccbf243e976ecc624a525a48a748fabfe54f2b15.png";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 
 interface AddisonSuccessStorySlideProps {
   onNext: () => void;
@@ -54,20 +54,16 @@ const testimonials = [
 const leftColumn = [testimonials[0], testimonials[1], testimonials[2], testimonials[3], testimonials[9]];
 const rightColumn = [testimonials[4], testimonials[5], testimonials[6], testimonials[7], testimonials[8]];
 
-const TestimonialCard = ({ text, author, index, align = "left" }: { text: string, author: string, index: number, align?: "left" | "right" }) => (
-  <motion.div
-    initial={{ opacity: 0, x: align === "left" ? -50 : 50 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ delay: 0.8 + (index * 0.1), duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-    className="bg-gradient-to-br from-[#0c0c0e] to-[#151518] backdrop-blur-sm border border-white/20 p-5 rounded-2xl mb-4 text-left relative group hover:border-emerald-500/40 transition-all duration-300 cursor-default"
+const TestimonialCard = ({ text, author }: { text: string, author: string }) => (
+  <div
+    className="bg-gradient-to-br from-[#0c0c0e] to-[#151518] backdrop-blur-sm border border-white/20 p-5 rounded-2xl mb-4 text-left relative group hover:border-emerald-500/40 transition-all duration-300 cursor-default flex-shrink-0"
     style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)' }}
-    whileHover={{ scale: 1.02, y: -2 }}
   >
     {/* Accent bar */}
     <div className="absolute top-0 bottom-0 left-0 w-1 bg-gradient-to-b from-emerald-500/50 to-transparent rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
     
     {/* Hover glow */}
-    <motion.div
+    <div
       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
       style={{
         background: 'radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08), transparent 70%)'
@@ -75,6 +71,12 @@ const TestimonialCard = ({ text, author, index, align = "left" }: { text: string
     />
     
     <div className="relative z-10">
+      {/* 5 Star Rating */}
+      <div className="flex gap-0.5 mb-2">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+        ))}
+      </div>
       <p className="text-white text-base leading-relaxed mb-3 font-inter">"{text}"</p>
       <div className="flex items-center gap-2">
         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-[10px] font-bold shadow-lg" style={{ boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)' }}>
@@ -83,8 +85,41 @@ const TestimonialCard = ({ text, author, index, align = "left" }: { text: string
         <span className="text-xs font-bold text-gray-200 uppercase tracking-wider">{author}</span>
       </div>
     </div>
-  </motion.div>
+  </div>
 );
+
+// Scrolling marquee component
+const ScrollingColumn = ({ items, direction = "up", speed = 25 }: { items: typeof testimonials, direction?: "up" | "down", speed?: number }) => {
+  // Duplicate items for seamless loop
+  const duplicatedItems = [...items, ...items];
+  
+  return (
+    <div className="relative h-full overflow-hidden">
+      {/* Gradient masks for smooth fade */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#050505] to-transparent z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050505] to-transparent z-10 pointer-events-none" />
+      
+      <motion.div
+        className="flex flex-col"
+        animate={{
+          y: direction === "up" ? ["0%", "-50%"] : ["-50%", "0%"]
+        }}
+        transition={{
+          y: {
+            duration: speed,
+            repeat: Infinity,
+            ease: "linear",
+            repeatType: "loop"
+          }
+        }}
+      >
+        {duplicatedItems.map((t, i) => (
+          <TestimonialCard key={`${t.author}-${i}`} {...t} />
+        ))}
+      </motion.div>
+    </div>
+  );
+};
 
 export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> = ({ onNext, onPrev }) => {
   const mouseX = useMotionValue(0);
@@ -203,13 +238,9 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
 
       <div className="relative z-10 w-full h-full max-w-[1600px] mx-auto flex gap-8 p-8 items-center font-inter">
         
-        {/* Left Column Testimonials */}
-        <div className="hidden lg:flex flex-col w-1/4 h-full justify-center space-y-4">
-          <div className="overflow-y-auto no-scrollbar py-20">
-            {leftColumn.map((t, i) => (
-              <TestimonialCard key={i} {...t} index={i} align="left" />
-            ))}
-          </div>
+        {/* Left Column Testimonials - Scrolling Up */}
+        <div className="hidden lg:block w-1/4 h-full">
+          <ScrollingColumn items={leftColumn} direction="up" speed={30} />
         </div>
 
         {/* Center Content */}
@@ -313,13 +344,9 @@ export const AddisonSuccessStorySlide: React.FC<AddisonSuccessStorySlideProps> =
 
         </div>
 
-        {/* Right Column Testimonials */}
-        <div className="hidden lg:flex flex-col w-1/4 h-full justify-center space-y-4">
-          <div className="overflow-y-auto no-scrollbar py-20">
-            {rightColumn.map((t, i) => (
-              <TestimonialCard key={i} {...t} index={i} align="right" />
-            ))}
-          </div>
+        {/* Right Column Testimonials - Scrolling Down */}
+        <div className="hidden lg:block w-1/4 h-full">
+          <ScrollingColumn items={rightColumn} direction="down" speed={35} />
         </div>
 
       </div>

@@ -112,12 +112,6 @@ export const IndexSlide: React.FC<IndexSlideProps> = ({ onNext, onPrev, onNaviga
   }, [mouseX, mouseY]);
 
 
-  const handleCardClick = (e: React.MouseEvent, targetSlide: number) => {
-    e.stopPropagation();
-    if (onNavigate) {
-      onNavigate(targetSlide);
-    }
-  };
 
   return (
     <div className="w-screen h-screen bg-[#050505] text-white p-12 flex flex-col overflow-hidden relative">
@@ -240,9 +234,7 @@ export const IndexSlide: React.FC<IndexSlideProps> = ({ onNext, onPrev, onNaviga
               variants={itemVariants}
               onHoverStart={() => setHoveredCard(idx)}
               onHoverEnd={() => setHoveredCard(null)}
-              whileTap={{ scale: 0.97 }}
-              onClick={(e) => handleCardClick(e, section.targetSlide)}
-              className={`${section.colSpan} bg-gradient-to-br from-[#0c0c0e] to-[#151518] border ${section.borderColor} rounded-3xl p-8 relative overflow-hidden shadow-2xl shadow-black/60 flex flex-col group cursor-pointer backdrop-blur-sm`}
+              className={`${section.colSpan} bg-gradient-to-br from-[#0c0c0e] to-[#151518] border ${section.borderColor} rounded-3xl p-8 relative overflow-hidden shadow-2xl shadow-black/60 flex flex-col group backdrop-blur-sm`}
               style={{
                 borderWidth: '1.5px',
                 transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
@@ -346,34 +338,6 @@ export const IndexSlide: React.FC<IndexSlideProps> = ({ onNext, onPrev, onNaviga
                   {section.description}
                 </p>
 
-                {/* Hover Indicator */}
-                <motion.div
-                  className="flex items-center gap-2 mt-6 pt-4 border-t border-white/5"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: hoveredCard === idx ? 1 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <span className={`text-sm font-medium ${section.textColor}`}>
-                    Click to jump to section
-                  </span>
-                  <motion.svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    className={section.textColor}
-                    animate={{ x: hoveredCard === idx ? [0, 4, 0] : 0 }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <path
-                      d="M6 3L11 8L6 13"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
-                </motion.div>
               </div>
             </motion.div>
           ))}

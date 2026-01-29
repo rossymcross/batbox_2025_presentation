@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -9,7 +9,7 @@ interface NavigationProps {
   onNext: () => void;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({
+export const Navigation: React.FC<NavigationProps> = memo(({
   currentSlide,
   totalSlides,
   onPrev,
@@ -67,4 +67,6 @@ export const Navigation: React.FC<NavigationProps> = ({
       </motion.button>
     </motion.div>
   );
-};
+});
+
+Navigation.displayName = 'Navigation';

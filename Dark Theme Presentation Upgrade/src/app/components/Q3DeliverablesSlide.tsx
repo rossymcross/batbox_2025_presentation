@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "motion/react";
 import { Calendar, Database, Users, BarChart3, Bot, Brain, Building2, CheckCircle2 } from "lucide-react";
-import analyticsDashboard from "../../assets/analytics-dashboard.png";
+import analyticsDashboard from "../../assets/image (77).png";
 
 interface Q3DeliverablesSlideProps {
   onNext: () => void;

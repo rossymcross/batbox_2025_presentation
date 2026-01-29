@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "motion/react";
-import { Calendar, Gauge, Gift, Tv, FileText, Shield, UserCheck, CheckCircle2 } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "motion/react";
+import { Calendar, Gauge, Gift, Tv, FileText, Shield, UserCheck, CheckCircle2, X } from "lucide-react";
 import jumbotronImage from "../../assets/jumbotron.png";
+import batboxSuiteVideo from "../../assets/BatboxSuite_C (2).mp4";
 
 interface Q4DeliverablesSlideProps {
   onNext: () => void;
@@ -31,8 +32,22 @@ const itemVariants = {
 export const Q4DeliverablesSlide: React.FC<Q4DeliverablesSlideProps> = ({ onNext, onPrev }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const spotlightGradient = useMotionTemplate`radial-gradient(circle 800px at ${mouseX}px ${mouseY}px, rgba(245, 158, 11, 0.06), transparent 70%)`;
+
+  const handlePlayVideo = () => {
+    setIsVideoPlaying(true);
+  };
+
+  const handleCloseVideo = () => {
+    setIsVideoPlaying(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -279,7 +294,7 @@ export const Q4DeliverablesSlide: React.FC<Q4DeliverablesSlideProps> = ({ onNext
             </div>
           </motion.div>
 
-          {/* Right Column - Image */}
+          {/* Right Column - Image with Video Play */}
           <motion.div 
             variants={itemVariants}
             className="flex items-center justify-center relative overflow-hidden"
@@ -291,52 +306,89 @@ export const Q4DeliverablesSlide: React.FC<Q4DeliverablesSlideProps> = ({ onNext
               className="relative w-full h-full flex items-center justify-center p-4"
               whileHover={{ scale: 1.02 }}
             >
-              {/* Background glow */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <motion.div 
-                  className="w-[500px] h-[500px] rounded-full"
+              {/* Video Preview Container */}
+              <motion.div
+                className="relative z-10 w-full h-full flex items-center justify-center cursor-pointer group"
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.3 }}
+                onClick={handlePlayVideo}
+              >
+                {/* Shimmer effect */}
+                <motion.div
+                  className="absolute inset-0 z-10 pointer-events-none rounded-2xl overflow-hidden"
                   style={{
-                    background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%)',
-                    filter: 'blur(60px)'
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent)'
                   }}
                   animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.5, 0.3]
+                    x: ['-100%', '200%']
                   }}
                   transition={{
-                    duration: 8,
+                    duration: 3,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "linear",
+                    repeatDelay: 2
                   }}
                 />
-              </div>
 
-              {/* Shimmer effect */}
-              <motion.div
-                className="absolute inset-0 z-10 pointer-events-none rounded-2xl overflow-hidden"
-                style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent)'
-                }}
-                animate={{
-                  x: ['-100%', '200%']
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatDelay: 2
-                }}
-              />
+                <img 
+                  src={jumbotronImage} 
+                  alt="Batbox Jumbotron - Advertising and sponsorship display system" 
+                  className="w-full h-full object-contain rounded-2xl"
+                  style={{ 
+                    maxHeight: '100%',
+                    maxWidth: '100%'
+                  }}
+                />
 
-              <img 
-                src={jumbotronImage} 
-                alt="Batbox Jumbotron - Advertising and sponsorship display system" 
-                className="w-full h-full object-contain rounded-2xl relative z-10"
-                style={{ 
-                  maxHeight: '100%',
-                  maxWidth: '100%'
-                }}
-              />
+                {/* Play Button Overlay */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center z-20"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  <motion.div
+                    className="w-24 h-24 rounded-full bg-amber-500/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:bg-amber-400 transition-colors duration-300"
+                    style={{
+                      boxShadow: '0 0 40px rgba(245, 158, 11, 0.5), 0 0 80px rgba(245, 158, 11, 0.3)'
+                    }}
+                    whileHover={{ scale: 1.15 }}
+                    animate={{
+                      scale: [1, 1.05, 1],
+                    }}
+                    transition={{
+                      scale: {
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }
+                    }}
+                  >
+                    {/* Play Icon */}
+                    <svg 
+                      className="w-12 h-12 text-white ml-1" 
+                      fill="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </motion.div>
+
+                  {/* Pulsing Ring */}
+                  <motion.div
+                    className="absolute w-24 h-24 rounded-full border-4 border-amber-400/50 pointer-events-none"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.5, 0, 0.5]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeOut"
+                    }}
+                  />
+                </motion.div>
+              </motion.div>
             </motion.div>
           </motion.div>
 
@@ -369,6 +421,73 @@ export const Q4DeliverablesSlide: React.FC<Q4DeliverablesSlideProps> = ({ onNext
           }}
         />
       ))}
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {isVideoPlaying && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md"
+            onClick={handleCloseVideo}
+          >
+            {/* Close Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ delay: 0.2 }}
+              onClick={handleCloseVideo}
+              className="absolute top-8 right-8 w-14 h-14 bg-white/10 border border-white/20 rounded-full backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all duration-300 z-[101]"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              style={{ boxShadow: '0 0 30px rgba(0, 0, 0, 0.5)' }}
+            >
+              <X className="w-7 h-7" strokeWidth={2} />
+            </motion.button>
+
+            {/* Video Container */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ 
+                type: "spring",
+                damping: 25,
+                stiffness: 300
+              }}
+              className="relative w-[90vw] max-w-[1400px] aspect-video rounded-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                boxShadow: '0 0 100px rgba(245, 158, 11, 0.3), 0 0 200px rgba(0, 0, 0, 0.8)'
+              }}
+            >
+              <video
+                ref={videoRef}
+                src={batboxSuiteVideo}
+                className="w-full h-full object-contain bg-black"
+                controls
+                autoPlay
+                playsInline
+              />
+            </motion.div>
+
+            {/* Video Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: 0.3 }}
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
+            >
+              <h3 className="text-2xl font-bold text-white mb-1">Batbox Suite Demo</h3>
+              <p className="text-gray-400">Q4 Platform Preview</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       </div>
   );
 };

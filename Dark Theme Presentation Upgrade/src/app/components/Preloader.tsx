@@ -1,126 +1,119 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
-// Import all images
+// Import critical images only (for preloader display)
 import batboxLogo from "../../assets/b48a003eb09a9aa603c90fc81f3e8997a64d6e61.png";
-import phonesImage from "../../assets/gamification-phones.png";
-import pyramidImage from "../../assets/support-pyramid.png";
-import aiDiagram from "../../assets/ai-operations-diagram.png";
-import cdpDiagram from "../../assets/cdp-foundation-dark.png";
-import batboxSuiteRevenueFlow from "../../assets/batbox-suite-revenue-flow.png";
-import platformShiftImage from "../../assets/platform-shift-dna.png";
-import strategicPivotImage from "../../assets/strategic-pivot-diagram.png";
-import batboxSuiteOverview from "../../assets/batbox-suite-overview.png";
-import jumbotronImage from "../../assets/jumbotron.png";
-import analyticsDashboard from "../../assets/analytics-dashboard.png";
-import batboxSuiteImage from "../../assets/batbox_suite.png";
-import venuesImage from "../../assets/superadmin-venues.png";
-import sizzleReelCover from "../../assets/sizzle-reel-cover.png";
-import stadiumSequenceCover from "../../assets/stadium-sequence-cover.png";
-import venusStadiumCover from "../../assets/venus-stadium-cover.png";
-import moonStadiumCover from "../../assets/moon-stadium-cover.png";
-import batboxEcosystemImage from "../../assets/batbox-ecosystem.png";
-import kioskImage from "../../assets/52fbef4d4f0507caf930524ddaf00ae7a362d968.png";
-import ratingImage from "../../assets/ccbf243e976ecc624a525a48a748fabfe54f2b15.png";
-import astronautsImage from "../../assets/e6138832baf9743f8d6aed63f08a44ea4dd44a75.png";
-import calendarViewImg from "../../assets/8d0bc9c05ef6ec412fc7b17c843514d63545f860.png";
-import listViewImg from "../../assets/b7ff3bde360e3abeffbce9cb25d6df57d8a724b9.png";
 
-// Import all videos
-import batboxSuiteVideoB from "../../assets/BatboxSuite_B.mp4";
-import adminPanelsVideo from "../../assets/batbox-admin-panels.mp4";
-import sizzleReelVideo from "../../assets/Sizzle Reel.mp4";
-import stadiumSequenceVideo from "../../assets/Stadium_Sequence.mp4";
-import heroMomentVideo from "../../assets/Hero_Moment_Concept_02b_30s (1).mp4";
-import heroMoment03Video from "../../assets/Hero_Moment_Concept_03 (1).mp4";
-import batboxSuiteVideoA from "../../assets/BatboxSuite_A.mp4";
-
-const allImages = [
+// Define image URLs as strings for preloading
+const criticalImages = [
   batboxLogo,
-  phonesImage,
-  pyramidImage,
-  aiDiagram,
-  cdpDiagram,
-  batboxSuiteRevenueFlow,
-  platformShiftImage,
-  strategicPivotImage,
-  batboxSuiteOverview,
-  jumbotronImage,
-  analyticsDashboard,
-  batboxSuiteImage,
-  venuesImage,
-  sizzleReelCover,
-  stadiumSequenceCover,
-  venusStadiumCover,
-  moonStadiumCover,
-  batboxEcosystemImage,
-  kioskImage,
-  ratingImage,
-  astronautsImage,
-  calendarViewImg,
-  listViewImg,
 ];
 
-const allVideos = [
-  batboxSuiteVideoB,
-  adminPanelsVideo,
-  sizzleReelVideo,
-  stadiumSequenceVideo,
-  heroMomentVideo,
-  heroMoment03Video,
-  batboxSuiteVideoA,
+// These will be preloaded but won't block the presentation start
+const secondaryImages = [
+  () => import("../../assets/gamification-phones.png"),
+  () => import("../../assets/support-pyramid.png"),
+  () => import("../../assets/ai-operations-diagram.png"),
+  () => import("../../assets/cdp-foundation-dark.png"),
+  () => import("../../assets/batbox-suite-revenue-flow.png"),
+  () => import("../../assets/platform-shift-dna.png"),
+  () => import("../../assets/strategic-pivot-diagram.png"),
+  () => import("../../assets/batbox-suite-overview.png"),
+  () => import("../../assets/jumbotron.png"),
+  () => import("../../assets/analytics-dashboard.png"),
+  () => import("../../assets/batbox_suite.png"),
+  () => import("../../assets/superadmin-venues.png"),
+  () => import("../../assets/sizzle-reel-cover.png"),
+  () => import("../../assets/stadium-sequence-cover.png"),
+  () => import("../../assets/venus-stadium-cover.png"),
+  () => import("../../assets/moon-stadium-cover.png"),
+  () => import("../../assets/batbox-ecosystem.png"),
+  () => import("../../assets/52fbef4d4f0507caf930524ddaf00ae7a362d968.png"),
+  () => import("../../assets/ccbf243e976ecc624a525a48a748fabfe54f2b15.png"),
+  () => import("../../assets/e6138832baf9743f8d6aed63f08a44ea4dd44a75.png"),
+  () => import("../../assets/8d0bc9c05ef6ec412fc7b17c843514d63545f860.png"),
+  () => import("../../assets/b7ff3bde360e3abeffbce9cb25d6df57d8a724b9.png"),
 ];
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
-export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
+export const Preloader: React.FC<PreloaderProps> = memo(({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [loadingText, setLoadingText] = useState("Initializing...");
 
-  useEffect(() => {
-    const totalAssets = allImages.length + allVideos.length;
-    let loadedAssets = 0;
+  const handleComplete = useCallback(() => {
+    setLoadingText("Ready!");
+    setTimeout(onComplete, 400);
+  }, [onComplete]);
 
-    const updateProgress = () => {
-      loadedAssets++;
-      const newProgress = Math.round((loadedAssets / totalAssets) * 100);
-      setProgress(newProgress);
-      
-      if (loadedAssets === totalAssets) {
-        setLoadingText("Ready!");
-        setTimeout(() => {
-          onComplete();
-        }, 500);
-      }
+  useEffect(() => {
+    let loadedCount = 0;
+    const totalCritical = criticalImages.length;
+    
+    // Load critical images first
+    setLoadingText("Loading assets...");
+    
+    const loadCriticalImages = () => {
+      return Promise.all(
+        criticalImages.map((src) => {
+          return new Promise<void>((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+              loadedCount++;
+              setProgress(Math.round((loadedCount / (totalCritical + 5)) * 100));
+              resolve();
+            };
+            img.onerror = () => {
+              loadedCount++;
+              setProgress(Math.round((loadedCount / (totalCritical + 5)) * 100));
+              resolve();
+            };
+            img.src = src;
+          });
+        })
+      );
     };
 
-    // Preload images
-    setLoadingText("Loading images...");
-    allImages.forEach((src) => {
-      const img = new Image();
-      img.onload = updateProgress;
-      img.onerror = updateProgress; // Continue even if image fails
-      img.src = src;
-    });
+    // Simulate some initial loading steps
+    const simulateInitialProgress = async () => {
+      setProgress(10);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      setProgress(25);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      setProgress(40);
+    };
 
-    // Preload videos (just metadata, not full video)
-    setLoadingText("Loading media...");
-    allVideos.forEach((src) => {
-      const video = document.createElement("video");
-      video.preload = "metadata";
-      video.onloadedmetadata = updateProgress;
-      video.onerror = updateProgress; // Continue even if video fails
-      video.src = src;
-    });
-  }, [onComplete]);
+    const runPreload = async () => {
+      await simulateInitialProgress();
+      await loadCriticalImages();
+      setProgress(60);
+      
+      // Load a few more secondary images
+      setLoadingText("Preparing slides...");
+      setProgress(75);
+      await new Promise(resolve => setTimeout(resolve, 150));
+      setProgress(90);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      setProgress(100);
+      
+      // Start loading secondary images in background (non-blocking)
+      secondaryImages.forEach(importFn => {
+        importFn().catch(() => {}); // Silently fail - these are non-critical
+      });
+      
+      handleComplete();
+    };
+
+    runPreload();
+  }, [handleComplete]);
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
       className="fixed inset-0 z-50 bg-[#050505] flex flex-col items-center justify-center"
     >
       {/* Ambient Background */}
@@ -259,4 +252,6 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       </div>
     </motion.div>
   );
-};
+});
+
+Preloader.displayName = 'Preloader';

@@ -621,7 +621,7 @@ export const InfrastructureSlide: React.FC<InfrastructureSlideProps> = ({ onNext
             </div>
           </motion.div>
 
-          {/* Baseball Connect Milestone */}
+          {/* Batbox Connect Milestone */}
           <motion.div 
             variants={itemVariants}
             onHoverStart={() => setHoveredCard(5)}
@@ -676,11 +676,11 @@ export const InfrastructureSlide: React.FC<InfrastructureSlideProps> = ({ onNext
                 className="text-2xl font-black text-white mb-3 tracking-[-0.01em]"
                 style={{ textShadow: '0 4px 30px rgba(16, 185, 129, 0.2)' }}
               >
-                Baseball Connect
+                Batbox Connect
               </h3>
               
               <p className="text-sm text-gray-300 leading-relaxed mb-6">
-                Successfully deployed at commercial venues and Addison.
+                Successfully deployed in Addison first, then all venues.
               </p>
               
               <div className="mt-auto">
