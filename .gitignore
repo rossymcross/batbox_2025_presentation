@@ -37,3 +37,9 @@ Create Presentation Page*/
 *.avi
 *.webm
 *.mkv
+
+# Archived old presentations
+archived/
+
+# Zip files
+*.zip
