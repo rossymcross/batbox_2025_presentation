@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "motion/react";
 import { Calendar, UserPlus, CreditCard, ListOrdered, Gamepad2, CheckCircle2, UserX, X } from "lucide-react";
 import kioskImage from "../../assets/52fbef4d4f0507caf930524ddaf00ae7a362d968.png";
-import batboxSuiteVideo from "../../assets/BatboxSuite_A.mp4";
+import batboxSuiteVideo from "../../assets/BatboxSuite_A (2).mp4";
 
 interface Q1DeliverablesSlideProps {
   onNext: () => void;

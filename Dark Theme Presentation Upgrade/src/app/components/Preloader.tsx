@@ -4,9 +4,31 @@ import { motion, AnimatePresence } from "motion/react";
 // Import critical images only (for preloader display)
 import batboxLogo from "../../assets/b48a003eb09a9aa603c90fc81f3e8997a64d6e61.png";
 
+// Import videos for preloading
+import sizzleReelVideo from "../../assets/Sizzle Reel_Final B.mp4";
+import stadiumSequenceVideo from "../../assets/Stadium_Sequence.mp4";
+import heroMomentVideo from "../../assets/Hero_Moment_Concept_02b_30s (1).mp4";
+import heroMoment03Video from "../../assets/Hero_Moment_Concept_03 (1).mp4";
+import batboxSuiteAVideo from "../../assets/BatboxSuite_A (2).mp4";
+import batboxSuiteBVideo from "../../assets/BatboxSuite_B (2).mp4";
+import batboxSuiteCVideo from "../../assets/BatboxSuite_C (2).mp4";
+import adminPanelsVideo from "../../assets/batbox-admin-panels.mp4";
+
 // Define image URLs as strings for preloading
 const criticalImages = [
   batboxLogo,
+];
+
+// Videos to preload
+const videosToPreload = [
+  sizzleReelVideo,
+  stadiumSequenceVideo,
+  heroMomentVideo,
+  heroMoment03Video,
+  batboxSuiteAVideo,
+  batboxSuiteBVideo,
+  batboxSuiteCVideo,
+  adminPanelsVideo,
 ];
 
 // These will be preloaded but won't block the presentation start
@@ -50,10 +72,10 @@ export const Preloader: React.FC<PreloaderProps> = memo(({ onComplete }) => {
 
   useEffect(() => {
     let loadedCount = 0;
-    const totalCritical = criticalImages.length;
+    const totalAssets = criticalImages.length + videosToPreload.length;
     
     // Load critical images first
-    setLoadingText("Loading assets...");
+    setLoadingText("Loading images...");
     
     const loadCriticalImages = () => {
       return Promise.all(
@@ -62,12 +84,12 @@ export const Preloader: React.FC<PreloaderProps> = memo(({ onComplete }) => {
             const img = new Image();
             img.onload = () => {
               loadedCount++;
-              setProgress(Math.round((loadedCount / (totalCritical + 5)) * 100));
+              setProgress(Math.round((loadedCount / totalAssets) * 60)); // Images take up 0-60%
               resolve();
             };
             img.onerror = () => {
               loadedCount++;
-              setProgress(Math.round((loadedCount / (totalCritical + 5)) * 100));
+              setProgress(Math.round((loadedCount / totalAssets) * 60));
               resolve();
             };
             img.src = src;
@@ -76,27 +98,71 @@ export const Preloader: React.FC<PreloaderProps> = memo(({ onComplete }) => {
       );
     };
 
+    // Preload videos using fetch to actually cache the data
+    const loadVideos = async () => {
+      setLoadingText("Loading videos...");
+      let videoLoadedCount = 0;
+      
+      // Load videos sequentially to show accurate progress and not overwhelm the connection
+      for (const src of videosToPreload) {
+        try {
+          // Use fetch to download the video into browser cache
+          const response = await fetch(src, { cache: 'force-cache' });
+          
+          if (response.ok) {
+            // Read the response to ensure it's fully cached
+            const reader = response.body?.getReader();
+            if (reader) {
+              while (true) {
+                const { done } = await reader.read();
+                if (done) break;
+              }
+            }
+          }
+        } catch (e) {
+          // Silently fail - video will just buffer when played
+          console.warn('Failed to preload video:', src);
+        }
+        
+        videoLoadedCount++;
+        // Videos take up 60-95% of progress
+        setProgress(60 + Math.round((videoLoadedCount / videosToPreload.length) * 35));
+      }
+    };
+
     // Simulate some initial loading steps
     const simulateInitialProgress = async () => {
+      setProgress(5);
+      await new Promise(resolve => setTimeout(resolve, 100));
       setProgress(10);
-      await new Promise(resolve => setTimeout(resolve, 100));
-      setProgress(25);
-      await new Promise(resolve => setTimeout(resolve, 100));
-      setProgress(40);
+    };
+
+    // Preload critical slide components
+    const preloadSlides = async () => {
+      setLoadingText("Preparing slides...");
+      
+      // Preload the first few slides that user will see immediately
+      const criticalSlides = [
+        () => import("@/app/components/OpeningSlide"),
+        () => import("@/app/components/IndexSlide"),
+        () => import("@/app/components/SectionTitleSlide"),
+        () => import("@/app/components/ObjectivesSlide"),
+      ];
+      
+      await Promise.all(criticalSlides.map(importFn => importFn().catch(() => {})));
     };
 
     const runPreload = async () => {
       await simulateInitialProgress();
       await loadCriticalImages();
-      setProgress(60);
+      await loadVideos();
       
-      // Load a few more secondary images
-      setLoadingText("Preparing slides...");
-      setProgress(75);
-      await new Promise(resolve => setTimeout(resolve, 150));
-      setProgress(90);
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Preload slide components before completing
+      setProgress(96);
+      await preloadSlides();
+      
       setProgress(100);
+      await new Promise(resolve => setTimeout(resolve, 100));
       
       // Start loading secondary images in background (non-blocking)
       secondaryImages.forEach(importFn => {

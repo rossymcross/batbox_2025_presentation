@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useMotionTemplate, AnimatePresence } from "motion/react";
 import { Calendar, Rocket, Gamepad2, Users, Trophy, Zap, Target, CheckCircle2, X } from "lucide-react";
 import batboxSuiteImage from "../../assets/batbox_suite.png";
-import batboxSuiteVideo from "../../assets/BatboxSuite_B.mp4";
+import batboxSuiteVideo from "../../assets/BatboxSuite_B (2).mp4";
 
 interface Q2DeliverablesSlideProps {
   onNext: () => void;
